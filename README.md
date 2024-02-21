@@ -1,4 +1,4 @@
-# FINN BEILKE Backend API Project
+# FINN BEILKE API Project
 
 ## Database Schema Design
 
