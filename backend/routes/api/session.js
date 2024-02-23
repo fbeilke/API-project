@@ -1,11 +1,25 @@
 const express = require('express');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const { check } = require('express-validator');
 
+const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
+
+const validateLogin = [
+    check('credential')
+        .exists({checkFalsy: true})
+        .notEmpty()
+        .withMessage('Please provide a valid email or username.'),
+    check('password')
+        .exists({checkFalsy: true})
+        .withMessage('Please provide a password.'),
+    handleValidationErrors
+]
+
 
 router.get('/', async (req, res, next) => {
     const {user} = req;
@@ -13,6 +27,8 @@ router.get('/', async (req, res, next) => {
     if (user) {
         const safeUser = {
             id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             username: user.username
         }
@@ -20,7 +36,7 @@ router.get('/', async (req, res, next) => {
     } else return res.json({user: null})
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
 
     const user = await User.unscoped().findOne({
@@ -42,6 +58,8 @@ router.post('/', async (req, res, next) => {
 
     const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username
     };
