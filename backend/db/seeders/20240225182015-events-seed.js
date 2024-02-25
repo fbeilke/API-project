@@ -3,7 +3,7 @@
 const { Event } = require('../models');
 
 let options = {};
-if (proecess.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 
