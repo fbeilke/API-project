@@ -11,6 +11,32 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Group.belongsToMany(models.User, {
+        through: models.Membership,
+        foreignKey: 'groupId',
+        otherKey: 'userId'
+      })
+
+      Group.belongsTo(models.User, {
+        foreignKey: 'organizerId'
+      })
+
+      Group.hasMany(models.Event, {
+        foreignKey: 'groupId'
+      })
+
+      Group.hasMany(models.Venue, {
+        foreignKey: 'groupId',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
+
+      Group.hasMany(models.GroupImage, {
+        foreignKey: 'groupId',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
+
     }
   }
   Group.init({
