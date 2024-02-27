@@ -142,9 +142,6 @@ router.get('/:groupId', async (req, res, next) => {
 
 
     const groupInfo = await Group.findByPk(groupId, {
-        attributes: {
-            include: [[Sequelize.fn("COUNT", Sequelize.col("Memberships.id")), "numMembers"]]
-        },
         include: [
             {
                 model: Membership,
@@ -169,6 +166,13 @@ router.get('/:groupId', async (req, res, next) => {
         ]
     })
 
+    const totalInfo = groupInfo.toJSON()
+    totalInfo.numMembers = await Membership.count({where: {
+        groupId: groupId
+        }
+    })
+
+
     if (groupInfo.id === null) {
         const err = new Error("Group couldn't be found");
         err.status = 404;
@@ -178,7 +182,7 @@ router.get('/:groupId', async (req, res, next) => {
 
     } else {
 
-        res.json(groupInfo)
+        res.json(totalInfo)
     }
 })
 
