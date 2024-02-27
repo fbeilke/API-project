@@ -23,14 +23,20 @@ module.exports = {
     {
       groupId: 1,
       address: '123 Address St',
+      city: 'New York',
+      state: 'NY'
     },
     {
       groupId: 2,
-      address: '456 Address Ln'
+      address: '456 Address Ln',
+      city: 'New York',
+      state: 'NY'
     },
     {
       groupId: 3,
-      address: '789 Address Dr'
+      address: '789 Address Dr',
+      city: 'New York',
+      state: 'NY'
     }
    ], {validate: true})
   },
