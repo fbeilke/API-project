@@ -29,7 +29,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       status: {
-        type: Sequelize.ENUM(['active', 'pending-approval'])
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

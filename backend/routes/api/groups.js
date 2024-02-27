@@ -31,14 +31,37 @@ const validateGroup = [
     handleValidationErrors
 ]
 
-isGroupOrganizer = async (req, res, next) => {
+const validateVenue = [
+    check('address')
+        .exists({checkFalsy: true})
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({checkFalsy: true})
+        .withMessage('City is required'),
+    check('state')
+        .exists({checkFalsy: true})
+        .withMessage('State is required'),
+    check('lat')
+        .isFloat({min: -90, max: 90})
+        .withMessage('Latitude must be within -90 and 90'),
+    check('lng')
+        .isFloat({min: -180, max: 180})
+        .withMessage('Longitude must be within -180 and 180'),
+    handleValidationErrors
+]
+
+
+
+// Authorization:
+
+const isGroupOrganizer = async (req, res, next) => {
     const { groupId } = req.params;
     const currentUserId = req.user.id;
 
     const group = await Group.findByPk(groupId)
 
     if(!group) {
-        const err = new Error("Couldn't find a Group with the specified id");
+        const err = new Error("Group couldn't be found");
         err.title = "Couldn't find a Group with the specified id"
         err.status = 404;
         err.errors = {message: "Group couldn't be found"};
@@ -54,7 +77,59 @@ isGroupOrganizer = async (req, res, next) => {
     }
 
     next()
-}
+  }
+
+  const isOwnerOrCohostMember = async (req, res, next) => {
+    const currentUserId = req.user.id;
+    const { groupId } = req.params;
+
+    const group = await Group.findByPk(groupId);
+
+    const membershipInfo = await Membership.findOne({
+        where: {
+            groupId: groupId,
+            userId: currentUserId
+        }
+    })
+
+    if(!group) {
+        const err = new Error("Group couldn't be found");
+        err.title = "Couldn't find a Group with the specified id"
+        err.status = 404;
+        err.errors = {message: "Group couldn't be found"};
+        next(err);
+    }
+
+    if (!membershipInfo || (membershipInfo.status !== 'Owner' && membershipInfo.status !== 'Co-host')) {
+        const err = new Error('Forbidden');
+        err.title = 'Forbidden';
+        err.status = 403;
+        err.errors = {message: 'Forbidden'};
+        next(err);
+    }
+
+    next()
+  }
+
+
+
+// Get all Venues for a Group specified by its id
+router.get('/:groupId/venues', requireAuth, isOwnerOrCohostMember, async (req, res, next) => {
+    const { groupId } = req.params;
+
+    const allVenues = await Venue.findAll({
+        where: {
+            groupId
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
+
+    res.json({Venues: allVenues});
+
+})
+
 
 // Get all Groups
 router.get('/', async (req, res, next) => {
@@ -188,6 +263,33 @@ router.get('/:groupId', async (req, res, next) => {
     }
 })
 
+// Create a new Venue for a Group specified by its id
+router.post('/:groupId/venues', requireAuth, isOwnerOrCohostMember, validateVenue, async (req, res, next) => {
+    const { groupId } = req.params;
+    const { address, city, state, lat, lng } = req.body;
+
+    const newVenue = await Venue.create({
+        groupId,
+        address,
+        city,
+        state,
+        lat,
+        lng
+    })
+
+    const result = await Venue.findByPk(newVenue.id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
+
+    res.json(result);
+
+
+})
+
+
+
 // Create a Group
 router.post('/', requireAuth, validateGroup, async (req, res, next) => {
     const {name, about, type, private, city, state} = req.body;
@@ -205,7 +307,7 @@ router.post('/', requireAuth, validateGroup, async (req, res, next) => {
     const firstMember = await Membership.create({
         userId: req.user.id,
         groupId: newGroup.id,
-        status: "active"
+        status: "Owner"
     })
 
     res.json(newGroup)
@@ -241,7 +343,7 @@ router.put('/:groupId', requireAuth, isGroupOrganizer, validateGroup, async (req
 
     const currentGroup = await Group.findByPk(groupId)
 
-   currentGroup.update({
+   await currentGroup.update({
         name,
         about,
         type,

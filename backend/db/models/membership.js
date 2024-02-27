@@ -36,8 +36,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM(['active', 'pending-approval']),
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'Pending',
+      validate: {
+        isValidStatus(value) {
+          if (value !== 'Member' && value !== 'Pending' && value !== 'Co-host' && value !== 'Owner') {
+            throw new Error ()
+          }
+        }
+      }
     }
   }, {
     sequelize,
