@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false
       },
       type: {
-        type: Sequelize.ENUM(['filler-category1', 'filler-category2', 'filler-category3']),
+        type: Sequelize.ENUM(['Online', 'In person']),
         allowNull: false
       },
       private: {

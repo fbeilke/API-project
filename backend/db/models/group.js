@@ -11,14 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Group.belongsToMany(models.User, {
-        through: models.Membership,
-        foreignKey: 'groupId',
-        otherKey: 'userId'
+      Group.hasMany(models.Membership, {
+        foreignKey: 'groupId'
       })
 
       Group.belongsTo(models.User, {
-        foreignKey: 'organizerId'
+        foreignKey: 'organizerId',
+        as: 'Organizer'
       })
 
       Group.hasMany(models.Event, {
@@ -52,14 +51,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [1, 60]
+      }
     },
     about: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [50, 500]
+      }
     },
     type: {
-      type: DataTypes.ENUM(['filler-category1', 'filler-category2', 'filler-category3']),
+      type: DataTypes.ENUM(['Online', 'In person']),
       allowNull: false
     },
     private: {
@@ -68,9 +73,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     city: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     state: {
       type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     sequelize,

@@ -23,23 +23,29 @@ module.exports = {
     {
       organizerId: 1,
       name: 'Group1',
-      about: 'We are group 1',
-      type: 'filler-category1',
-      private: false
+      about: 'We are group 1 and we need to have a description longer than 50 characters',
+      type: 'In person',
+      private: false,
+      city: 'New York',
+      state: 'NY'
     },
     {
       organizerId: 2,
       name: 'Group2',
-      about: 'We are group 2',
-      type: 'filler-category2',
-      private: false
+      about: 'We are group 2 and we need to have a description longer than 50 characters',
+      type: 'Online',
+      private: false,
+      city: 'New York',
+      state: 'NY'
     },
     {
       organizerId: 3,
       name: 'PrivateGroup',
-      about: 'We are group 3 and private',
-      type: 'filler-category3',
-      private: true
+      about: 'We are group 3 and private and we need to have a description longer than 50 characters',
+      type: 'In person',
+      private: true,
+      city: 'New York',
+      state: 'NY'
     }
    ], {validate: true})
   },
