@@ -38,7 +38,8 @@ isGroupOrganizer = async (req, res, next) => {
     const group = await Group.findByPk(groupId)
 
     if(!group) {
-        const err = new Error("Couldn't find a Group with the specified Id");
+        const err = new Error("Couldn't find a Group with the specified id");
+        err.title = "Couldn't find a Group with the specified id"
         err.status = 404;
         err.errors = {message: "Group couldn't be found"};
         next(err);
@@ -46,6 +47,7 @@ isGroupOrganizer = async (req, res, next) => {
 
     if (group.organizerId !== parseInt(currentUserId)) {
         const err = new Error('Forbidden');
+        err.title = 'Forbidden'
         err.status = 403;
         err.errors = {message: "Forbidden"};
         next(err);
