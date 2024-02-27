@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isOnlineOrInPerson(value) {
-          if (value !== 'Online' || value !== 'In person') {
+          if (value !== 'Online' && value !== 'In person') {
             throw new Error()
           }
         }
