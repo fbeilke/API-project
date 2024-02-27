@@ -64,8 +64,15 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     type: {
-      type: DataTypes.ENUM(['Online', 'In person']),
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isOnlineOrInPerson(value) {
+          if (value !== 'Online' || value !== 'In person') {
+            throw new Error()
+          }
+        }
+      }
     },
     private: {
       type: DataTypes.BOOLEAN,
