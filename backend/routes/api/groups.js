@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const { check } = require('express-validator')
 
 const { handleValidationErrors } = require('../../utils/validation');
-const { Group, Membership, GroupImage, User, Venue} = require('../../db/models');
+const { Group, Membership, GroupImage, User, Venue, Event, EventImage, Attendance} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth')
 
 const validateGroup = [
@@ -110,6 +110,73 @@ const isGroupOrganizer = async (req, res, next) => {
 
     next()
   }
+
+// Get all Events of a Group specified by its id
+router.get('/:groupId/events', async (req, res, next) => {
+    const { groupId } = req.params;
+
+    const group = await Group.findByPk(groupId);
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.title = "Couldn't find a Group with the specified id";
+        err.status = 404;
+        err.errors = {message: "Group couldn't be found"};
+        next(err)
+    }
+
+
+    const allEvents = await Event.findAll({
+        attributes: {
+            exclude: ['description', 'capacity', 'price', 'createdAt', 'updatedAt']
+        },
+        include: [
+            {
+                model: Group,
+                attributes: ['id', 'name', 'city', 'state'],
+                where: {
+                    id: groupId
+                }
+            },
+            {
+                model: Venue,
+                attributes: ['id', 'city', 'state']
+            }
+        ]
+    })
+
+    const allEventsWith = await Promise.all(allEvents.map(async (event) => {
+
+        const jsonEvent = event.toJSON();
+
+        jsonEvent.numAttending = await Attendance.count({
+            where: {
+                eventId: event.id
+            }
+        })
+
+        const imageObj = await EventImage.findOne({
+            where: {
+                eventId: event.id,
+                preview: true
+            }
+        })
+
+        if (!imageObj) {
+            jsonEvent.previewImage = null;
+        } else {
+            const { url } = imageObj;
+            jsonEvent.previewImage = url;
+        }
+
+
+        return jsonEvent
+    }))
+
+
+    res.json({Events: allEventsWith})
+
+})
 
 
 
