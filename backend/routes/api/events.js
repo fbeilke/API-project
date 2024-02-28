@@ -19,7 +19,7 @@ const validateEvent = [
         .isNumeric({min: 1})
         .withMessage("Capacity must be an integer"),
     check('price')
-        .isNumeric()
+        .isFloat({min: 0})
         .withMessage("Price is invalid"),
     check('description')
         .exists({checkFalsy: true})
@@ -53,7 +53,6 @@ const isAttendee = async (req, res, next) => {
         const err = new Error("Event couldn't be found");
         err.title = "Couldn't find an Event with the specified id";
         err.status = 404;
-        err.errors = {message: "Event couldn't be found"};
         next(err);
     }
 
@@ -69,7 +68,6 @@ const isAttendee = async (req, res, next) => {
         const err = new Error("Forbidden");
         err.title = "Forbidden";
         err.status = 403;
-        err.errors = {message: "Forbidden"};
         next(err);
     }
 
@@ -86,7 +84,6 @@ const isOwnerOrCohostMember = async (req, res, next) => {
         const err = new Error("Event couldn't be found");
         err.title = "Couldn't find a Event with the specified id"
         err.status = 404;
-        err.errors = {message: "Event couldn't be found"};
         next(err);
     }
 
@@ -103,7 +100,6 @@ const isOwnerOrCohostMember = async (req, res, next) => {
         const err = new Error('Forbidden');
         err.title = 'Forbidden';
         err.status = 403;
-        err.errors = {message: 'Forbidden'};
         next(err);
     }
 
@@ -191,7 +187,6 @@ router.get('/:eventId', async (req, res, next) => {
         const err = new Error("Event couldn't be found");
         err.title = "Couldn't find an Event with the specified id";
         err.status = 404;
-        err.errors = {message: "Event couldn't be found"};
         next(err);
     }
 
@@ -240,13 +235,12 @@ router.put('/:eventId', requireAuth, isOwnerOrCohostMember, validateEvent, async
         const err = new Error("Venue couldn't be found");
         err.title = "Couldn't find a Venue with the specified id";
         err.status = 404;
-        err.errors = {message: "Venue couldn't be found"}
         next(err);
     }
 
     const currentEvent = await Event.findByPk(eventId);
 
-    currentEvent.update({
+    await currentEvent.update({
         venueId,
         name,
         type,

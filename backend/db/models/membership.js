@@ -41,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'Pending',
       validate: {
         isValidStatus(value) {
-          if (value !== 'Member' && value !== 'Pending' && value !== 'Co-host' && value !== 'Owner') {
+          const valueFixed = value[0].toUpperCase() + value.slice(1)
+          if (valueFixed !== 'Member' && valueFixed !== 'Pending' && valueFixed !== 'Co-host' && valueFixed !== 'Owner') {
             throw new Error ()
           }
         }

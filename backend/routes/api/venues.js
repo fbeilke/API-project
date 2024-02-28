@@ -36,7 +36,6 @@ const isOwnerOrCohostMember = async (req, res, next) => {
         const err = new Error("Venue couldn't be found");
         err.title = "Couldn't find a Venue with the specified id"
         err.status = 404;
-        err.errors = {message: "Venue couldn't be found"};
         next(err);
     }
 
@@ -53,7 +52,6 @@ const isOwnerOrCohostMember = async (req, res, next) => {
         const err = new Error('Forbidden');
         err.title = 'Forbidden';
         err.status = 403;
-        err.errors = {message: 'Forbidden'};
         next(err);
     }
 
