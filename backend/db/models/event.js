@@ -47,11 +47,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.TEXT,
     type: {
-      type: DataTypes.ENUM(['online', 'indoor', 'outdoor']),
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isValidType(value) {
+          if (value !== 'Online' && value !== 'In person') {
+            throw new Error("Value must be 'Online' or 'In person'")
+          }
+        }
+      }
     },
     capacity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
+    price: DataTypes.DECIMAL(6, 2),
     startDate: {
       type: DataTypes.DATE,
       allowNull: false

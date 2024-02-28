@@ -23,17 +23,17 @@ module.exports = {
     {
       eventId: 1,
       userId: 1,
-      status: 'filler-status1'
+      status: 'attending'
     },
     {
       eventId: 2,
       userId: 2,
-      status: 'filler-status2'
+      status: 'attending'
     },
     {
       eventId: 3,
       userId: 3,
-      status: 'filler-status3'
+      status: 'attending'
     }
    ], {validate: true})
   },

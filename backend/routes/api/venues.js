@@ -24,6 +24,7 @@ const validateVenue = [
     handleValidationErrors
 ]
 
+// Authorization
 
 const isOwnerOrCohostMember = async (req, res, next) => {
     const currentUserId = req.user.id;

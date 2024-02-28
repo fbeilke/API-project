@@ -29,7 +29,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       status: {
-        type: Sequelize.ENUM(['filler-status1', 'filler-status2', 'filler-status3']),
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {

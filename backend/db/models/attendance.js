@@ -29,8 +29,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM(['filler-status1', 'filler-status2', 'filler-status3']),
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isValidStatus(value) {
+          if (value !== 'attending' && value !== 'pending' && value !== 'waitlist') {
+            throw new Error("Must be 'attending', 'waitlist', or 'pending'")
+          }
+        }
+      }
     }
   }, {
     sequelize,

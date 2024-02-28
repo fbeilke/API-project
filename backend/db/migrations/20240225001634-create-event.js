@@ -31,14 +31,14 @@ module.exports = {
         type: Sequelize.TEXT
       },
       type: {
-        type: Sequelize.ENUM(['online', 'indoor', 'outdoor']),
+        type: Sequelize.STRING,
         allowNull: false
       },
       capacity: {
         type: Sequelize.INTEGER
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL(6, 2)
       },
       startDate: {
         type: Sequelize.DATE,

@@ -50,6 +50,41 @@ const validateVenue = [
     handleValidationErrors
 ]
 
+const validateEvent = [
+    check('name')
+        .exists({checkFalsy: true})
+        .isLength({min: 5})
+        .withMessage("Name must be at least 5 characters"),
+    check('type')
+        .exists({checkFalsy: true})
+        .isIn(['Online', 'In person'])
+        .withMessage("Type must be Online or In person"),
+    check('capacity')
+        .isNumeric({min: 1})
+        .withMessage("Capacity must be an integer"),
+    check('price')
+        .isNumeric()
+        .withMessage("Price is invalid"),
+    check('description')
+        .exists({checkFalsy: true})
+        .withMessage("Description is required"),
+    check('startDate')
+        .custom(value => {
+           currentDate = new Date();
+           valueFormatted = new Date(value);
+           return currentDate < valueFormatted
+        })
+        .withMessage("Start date must be in the future"),
+    check('endDate')
+        .custom((value, {req}) => {
+            endDateFormatted = Date.parse(value);
+            startDateFormatted = Date.parse(req.body.startDate);
+            return endDateFormatted > startDateFormatted;
+        })
+        .withMessage("End date is less than start date"),
+    handleValidationErrors
+]
+
 
 
 // Authorization:
@@ -329,6 +364,58 @@ router.get('/:groupId', async (req, res, next) => {
         res.json(totalInfo)
     }
 })
+
+
+// Create an Event for a Group specified by its id
+router.post('/:groupId/events', requireAuth, isOwnerOrCohostMember, validateEvent, async (req, res, next) => {
+    const { groupId } = req.params;
+    let { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+
+    const validVenue = await Venue.findOne({
+        where: {
+            id: venueId,
+            groupId
+        }
+    });
+
+    if (!validVenue && venueId !== null) {
+        const err = new Error("Venue couldn't be found");
+        err.title = "Couldn't find a Venue with the specified id";
+        err.status = 404;
+        err.errors = {message: "Venue couldn't be found"}
+        next(err);
+    }
+
+    const newEvent = await Event.create({
+        groupId,
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate
+    })
+
+    const firstAttendee = await Attendance.create({
+        eventId: newEvent.id,
+        userId: req.user.id,
+        status: 'attending'
+    })
+
+    const result = await Event.findByPk(newEvent.id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
+
+    res.json(result);
+
+
+})
+
+
 
 // Create a new Venue for a Group specified by its id
 router.post('/:groupId/venues', requireAuth, isOwnerOrCohostMember, validateVenue, async (req, res, next) => {
