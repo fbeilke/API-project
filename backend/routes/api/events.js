@@ -201,7 +201,15 @@ router.get('/:eventId/attendees', async (req, res, next) => {
             }
         })
 
-        if (currentUserMembership === 'Owner' || currentUserMembership === 'Co-host') {
+        if (!currentUserMembership) {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.status = 403;
+            next(err);
+            return;
+        }
+
+        if (currentUserMembership.status === 'Owner' || currentUserMembership.status === 'Co-host') {
             const attendanceInfoOwnerCohost = await User.findAll({
                 attributes: ['id', 'firstName', 'lastName'],
                 include: {
@@ -550,7 +558,15 @@ router.delete('/:eventId/attendance/:userId', requireAuth, async (req, res, next
             }
         })
 
-        if (currentUserId === userId || currentUserMembership.status === "Owner" || currentUserMembership.status === "Co-host") {
+        if (!currentUserMembership) {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.status = 403;
+            next(err);
+            return;
+        }
+
+        if (currentUserId === userId || currentUserMembership.status === "Owner") {
             await attendanceToDelete.destroy();
 
             res.json({message: "Successfully deleted attendance from event"});

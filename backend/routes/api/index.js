@@ -23,7 +23,7 @@ router.use('/events', eventsRouter);
 
 router.use('/group-images', groupImagesRouter);
 
-router.use('./event-images', eventImagesRouter)
+router.use('/event-images', eventImagesRouter)
 
 
 

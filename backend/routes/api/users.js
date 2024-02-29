@@ -12,18 +12,18 @@ const router = express.Router();
 const validateSignup = [
     check('firstName')
       .exists({ checkFalsy: true })
-      .withMessage('Please provide a first name.'),
+      .withMessage('First name is required'),
     check('lastName')
       .exists({ checkFalsy: true })
-      .withMessage('Please provide a last name.'),
+      .withMessage('Last name is required'),
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email'),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
-      .withMessage('Please provide a username with at least 4 characters.'),
+      .withMessage('Username is required'),
     check('username')
       .not()
       .isEmail()
@@ -41,6 +41,34 @@ router.post('/', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, username, password } = req.body;
 
     const hashedPassword = bcrypt.hashSync(password);
+
+    const validateEmail = await User.findOne({
+      where: {
+        email
+      }
+    })
+
+    if (validateEmail) {
+      const err = new Error("User already exists");
+      err.title = "User already exists with the specified email";
+      err.status = 500;
+      err.errors = {email: "User with that email already exists"}
+      next(err);
+    }
+
+    const validateUsername = await User.findOne({
+      where: {
+        username
+      }
+    })
+
+    if (validateUsername) {
+      const err = new Error("User already exists");
+      err.title = "User already exists with the specified username";
+      err.status = 500;
+      err.errors = {username: "User with that username already exists"}
+      next(err);
+    }
 
     const newUser = await User.create({
         firstName,

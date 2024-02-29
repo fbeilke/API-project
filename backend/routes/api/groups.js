@@ -173,13 +173,22 @@ router.get('/:groupId/members', async (req, res, next) => {
             }
         })
 
-        if (currentUserMembership && (currentUserMembership.status === 'Owner' || currentUserMembership === 'Co-host')) {
+        if (!currentUserMembership) {
+            const err = new Error("Forbidden");
+            err.title = "Forbidden";
+            err.status = 403;
+            next(err);
+            return;
+        }
+
+        if (currentUserMembership && (currentUserMembership.status === 'Owner' || currentUserMembership.status === 'Co-host')) {
             const listOfMembers = await User.findAll({
                 attributes: {
                     exclude: ['username', 'hashedPassword', 'updatedAt', 'createdAt', 'email']
                 },
                 include: {
                     model: Membership,
+                    as: 'Membership',
                     attributes: ['status'],
                     where: {
                         groupId
@@ -199,6 +208,7 @@ router.get('/:groupId/members', async (req, res, next) => {
         },
         include: {
             model: Membership,
+            as: 'Membership',
             attributes: ['status'],
             where: {
                 groupId,
@@ -716,6 +726,14 @@ router.delete('/:groupId/membership/:memberId', requireAuth, async (req, res, ne
             groupId
         }
     })
+
+    if (!currentUserMembership) {
+        const err = new Error("Forbidden");
+        err.title = "Forbidden"
+        err.status = 403;
+        next(err);
+        return
+    }
 
     const userToEdit = await User.findByPk(memberId);
 
