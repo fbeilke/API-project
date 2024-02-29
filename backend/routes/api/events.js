@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Event, Group, Venue, Attendance, EventImage, Membership, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { ResultWithContextImpl } = require('express-validator/src/chain');
+
 
 
 const validateEvent = [
