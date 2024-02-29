@@ -49,6 +49,38 @@ const validateAttendanceStatus = [
     handleValidationErrors
 ]
 
+const validateQueries = [
+    check('page')
+        .optional({nullable: true})
+        .isInt({min: 1, max: 10})
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .optional({nullable: true})
+        .isInt({min: 1, max: 20})
+        .withMessage("Size must be greater than or equal to 1"),
+    check('name')
+        .optional({nullable: true})
+        .not()
+        .isNumeric()
+        .withMessage('Name must be a string'),
+    check('name')
+        .optional({nullable: true})
+        .not()
+        .isIn(['null', 'NaN', 'undefined', 'true', 'false'])
+        .withMessage('Name must be a string'),
+    check('type')
+        .optional({nullable: true})
+        .isIn(['Online', 'In person'])
+        .withMessage("Type must be 'Online' or 'In person'"),
+    check('startDate')
+        .optional({nullable: true})
+        .custom(value => {
+            return Date.parse(value)
+        })
+        .withMessage("Start date must be a valid datetime"),
+    handleValidationErrors
+]
+
 
 // Authorization
 const isAttendee = async (req, res, next) => {
@@ -214,9 +246,26 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
 
 // Get all Events
-router.get('/', async (req, res, next) => {
+router.get('/', validateQueries, async (req, res, next) => {
+    let { page, size, name, type, startDate } = req.query;
+
+    const where = {};
+
+    if (name) where.name = name;
+    if (type) where.type = type;
+    if (startDate) where.startDate = startDate;
+
+    if(!page) page = 1;
+    if(!size) size = 20;
+
+    const pagination = {
+        limit: size,
+        offset: (page - 1) * size
+    }
+
 
     const allEvents = await Event.findAll({
+        where,
         attributes: {
             exclude: ['description', 'capacity', 'price', 'createdAt', 'updatedAt']
         },
@@ -229,7 +278,8 @@ router.get('/', async (req, res, next) => {
                 model: Venue,
                 attributes: ['id', 'city', 'state']
             }
-        ]
+        ],
+        ...pagination
     })
 
     const allEventsWith = await Promise.all(allEvents.map(async (event) => {
@@ -261,7 +311,7 @@ router.get('/', async (req, res, next) => {
     }))
 
 
-    res.json({Events: allEventsWith})
+    res.json({Events: allEventsWith, page: parseInt(page), size: parseInt(size)})
 
 })
 
