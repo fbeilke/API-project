@@ -38,7 +38,6 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'Pending',
       validate: {
         isValidStatus(value) {
           const valueFixed = value[0].toUpperCase() + value.slice(1)

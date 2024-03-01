@@ -174,14 +174,26 @@ router.get('/:groupId/members', async (req, res, next) => {
         })
 
         if (!currentUserMembership) {
-            const err = new Error("Forbidden");
-            err.title = "Forbidden";
-            err.status = 403;
-            next(err);
-            return;
-        }
+            const listOfMembers = await User.findAll({
+                attributes: {
+                    exclude:  ['username', 'hashedPassword', 'updatedAt', 'createdAt', 'email']
+                },
+                include: {
+                    model: Membership,
+                    as: 'Membership',
+                    attributes: ['status'],
+                    where: {
+                        groupId,
+                        status: {
+                            [Op.in]: ['Member', 'Co-host', 'Owner']
+                        }
+                    }
+                }
+            })
 
-        if (currentUserMembership && (currentUserMembership.status === 'Owner' || currentUserMembership.status === 'Co-host')) {
+            res.json({Members: listOfMembers})
+            return;
+        } else if (currentUserMembership.status === 'Owner' || currentUserMembership.status === 'Co-host') {
             const listOfMembers = await User.findAll({
                 attributes: {
                     exclude: ['username', 'hashedPassword', 'updatedAt', 'createdAt', 'email']
@@ -468,6 +480,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
         err.title = "Current User already has a pending membership for the group";
         err.status = 400;
         next(err);
+
     } else if (currentMember && currentMember.status !== 'Pending') {
         const err = new Error("User is already a member of the group");
         err.title = "Current User is already an accepted member of the group";
@@ -667,6 +680,7 @@ router.put('/:groupId/membership', requireAuth, isOwnerOrCohostMember, validateM
         })
 
         res.json(result)
+        return;
 
 
     } if (statusFixed === 'Co-host' && currentUserMembership.status === 'Owner') {
@@ -720,21 +734,6 @@ router.delete('/:groupId/membership/:memberId', requireAuth, async (req, res, ne
     const { groupId, memberId } = req.params;
     const currentUserId = req.user.id;
 
-    const currentUserMembership = await Membership.findOne({
-        where: {
-            userId: currentUserId,
-            groupId
-        }
-    })
-
-    if (!currentUserMembership) {
-        const err = new Error("Forbidden");
-        err.title = "Forbidden"
-        err.status = 403;
-        next(err);
-        return
-    }
-
     const userToEdit = await User.findByPk(memberId);
 
     if (!userToEdit) {
@@ -755,6 +754,24 @@ router.delete('/:groupId/membership/:memberId', requireAuth, async (req, res, ne
         return
     }
 
+
+    const currentUserMembership = await Membership.findOne({
+        where: {
+            userId: currentUserId,
+            groupId
+        }
+    })
+
+    if (!currentUserMembership) {
+        const err = new Error("Forbidden");
+        err.title = "Forbidden"
+        err.status = 403;
+        next(err);
+        return
+    }
+
+
+
     const membershipToDelete = await Membership.findOne({
         where: {
             userId: memberId,
@@ -763,7 +780,7 @@ router.delete('/:groupId/membership/:memberId', requireAuth, async (req, res, ne
     })
 
 
-    if (!membershipToDelete || !currentUserMembership) {
+    if (!membershipToDelete) {
         const err = new Error("Membership does not exist for this User");
         err.title = "Membership does not exist for this User"
         err.status = 404;

@@ -202,10 +202,20 @@ router.get('/:eventId/attendees', async (req, res, next) => {
         })
 
         if (!currentUserMembership) {
-            const err = new Error("Forbidden");
-            err.title = "Forbidden";
-            err.status = 403;
-            next(err);
+            const attendanceInfoGeneral = await User.findAll({
+                attributes: ['id', 'firstName', 'lastName'],
+                include: {
+                    model: Attendance,
+                    as: 'Attendance',
+                    where: {
+                        eventId,
+                        status: ['attending', 'waitlist']
+                    },
+                    attributes: ['status']
+                }
+            })
+
+            res.json({Attendees: attendanceInfoGeneral})
             return;
         }
 
@@ -214,6 +224,7 @@ router.get('/:eventId/attendees', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName'],
                 include: {
                     model: Attendance,
+                    as: 'Attendance',
                     where: {
                         eventId
                     },
@@ -566,7 +577,8 @@ router.delete('/:eventId/attendance/:userId', requireAuth, async (req, res, next
             return;
         }
 
-        if (currentUserId === userId || currentUserMembership.status === "Owner") {
+
+        if (parseInt(currentUserId) === parseInt(userId) || currentUserMembership.status === "Owner") {
             await attendanceToDelete.destroy();
 
             res.json({message: "Successfully deleted attendance from event"});
