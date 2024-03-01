@@ -464,7 +464,7 @@ router.put('/:eventId/attendance', requireAuth, isOwnerOrCohostMember, validateA
         next(err);
     }
 
-    attendanceToUpdate.update({
+    await attendanceToUpdate.update({
         status
     })
 
