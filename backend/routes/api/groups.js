@@ -466,6 +466,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
         err.status = 404;
         err.title = "Couldn't find a Group with the specified id";
         next(err);
+        return;
     }
 
     const currentMember = await Membership.findOne({
@@ -480,12 +481,14 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
         err.title = "Current User already has a pending membership for the group";
         err.status = 400;
         next(err);
+        return;
 
     } else if (currentMember && currentMember.status !== 'Pending') {
         const err = new Error("User is already a member of the group");
         err.title = "Current User is already an accepted member of the group";
         err.status = 400;
         next(err);
+        return;
     }
 
     const newMembership = await Membership.create({
@@ -519,6 +522,7 @@ router.post('/:groupId/events', requireAuth, isOwnerOrCohostMember, validateEven
         err.title = "Couldn't find a Venue with the specified id";
         err.status = 404;
         next(err);
+        return;
     }
 
     const newEvent = await Event.create({
@@ -754,6 +758,22 @@ router.delete('/:groupId/membership/:memberId', requireAuth, async (req, res, ne
         return
     }
 
+    const membershipToDelete = await Membership.findOne({
+        where: {
+            userId: memberId,
+            groupId
+        }
+    })
+
+
+    if (!membershipToDelete) {
+        const err = new Error("Membership does not exist for this User");
+        err.title = "Membership does not exist for this User"
+        err.status = 404;
+        next(err);
+        return
+    }
+
 
     const currentUserMembership = await Membership.findOne({
         where: {
@@ -772,21 +792,6 @@ router.delete('/:groupId/membership/:memberId', requireAuth, async (req, res, ne
 
 
 
-    const membershipToDelete = await Membership.findOne({
-        where: {
-            userId: memberId,
-            groupId
-        }
-    })
-
-
-    if (!membershipToDelete) {
-        const err = new Error("Membership does not exist for this User");
-        err.title = "Membership does not exist for this User"
-        err.status = 404;
-        next(err);
-        return
-    }
 
     if (currentUserMembership.status === 'Owner' || currentUserId === +(memberId)) {
         membershipToDelete.destroy();
