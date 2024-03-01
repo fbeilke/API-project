@@ -75,7 +75,7 @@ const validateQueries = [
     check('startDate')
         .optional({nullable: true})
         .custom(value => {
-            return Date.parse(value)
+            return Date.parse(value) > Date.parse('2000-01-01')
         })
         .withMessage("Start date must be a valid datetime"),
     handleValidationErrors
