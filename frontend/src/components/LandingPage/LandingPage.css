@@ -1,0 +1,60 @@
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.intro-container {
+    display: flex;
+    gap: 10px;
+    margin: 30px;
+
+}
+
+.intro {
+    width: 45%;
+}
+
+.intro-img {
+    width: 45%;
+    border: 1px solid red;
+}
+
+.how {
+    margin: 50px;
+    width: 200px;
+}
+
+.details-nav-container {
+    display: flex;
+}
+
+.details-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.details-img {
+    border: 1px solid red;
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+}
+
+.join-button {
+    list-style-type: none;
+    padding: 15px 50px;
+    background-color: teal;
+    color: white;
+    box-shadow: 3px 3px 0px black;
+    border: 1px solid black;
+    margin: 20px;
+
+}
+
+.details-p {
+    width: 80%;
+}

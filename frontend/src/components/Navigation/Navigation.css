@@ -30,7 +30,7 @@ h1 {
   padding: 15px 10px;
 }
 
-a {
+.nav-bar-link {
   color: white;
   text-decoration: none;
 }

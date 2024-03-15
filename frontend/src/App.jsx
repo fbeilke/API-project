@@ -4,6 +4,9 @@ import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation/Navigation-bonus';
+import LandingPage from './components/LandingPage/LandingPage'
+import Groups from './components/Groups/Groups';
+import Events from './components/Events/Events'
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 
@@ -32,8 +35,16 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h2>Welcome!</h2>
+        element: <LandingPage />
       },
+      {
+        path: '/groups',
+        element: <Groups />
+      },
+      {
+        path: '/events',
+        element: <Events />
+      }
       // {
       //   path: 'login',
       //   element: <LoginFormPage />

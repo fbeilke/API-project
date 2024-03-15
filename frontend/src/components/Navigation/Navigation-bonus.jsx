@@ -8,16 +8,16 @@ function Navigation({ isLoaded }) {
 
   return (
     <nav className='nav-bar'>
-      <h1><NavLink to="/">Meetup</NavLink></h1>
+      <h1><NavLink to="/" className='nav-bar-link'>Meetup</NavLink></h1>
       <ul className='nav-links'>
         <li className='nav-link'>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/" className='nav-bar-link'>Home</NavLink>
         </li>
         <li className='nav-link'>
-          <NavLink to='/events'>Events</NavLink>
+          <NavLink to='/groups' className='nav-bar-link'>Groups</NavLink>
         </li>
         <li className='nav-link'>
-          <NavLink to='/groups'>Groups</NavLink>
+          <NavLink to='/events' className='nav-bar-link'>Events</NavLink>
         </li>
         {isLoaded && (
           <li className='nav-link'>
