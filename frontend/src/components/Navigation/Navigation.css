@@ -5,3 +5,32 @@
 .hidden {
   display: none;
 }
+
+h1 {
+  font-size: 30px;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+
+.nav-links {
+  display: flex;
+  align-items:center;
+}
+
+.nav-link {
+  display: flex;
+  padding: 15px 10px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}

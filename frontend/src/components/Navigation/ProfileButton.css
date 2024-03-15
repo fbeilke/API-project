@@ -1,0 +1,17 @@
+.profile-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-dropdown {
+
+    position: relative;
+    text-align: center;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
