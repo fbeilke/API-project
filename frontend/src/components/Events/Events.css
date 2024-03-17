@@ -1,0 +1,26 @@
+.sub-title {
+    padding: 0px 30px;
+}
+
+.event-card {
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    border-top: 1px solid lightslategray;
+}
+
+.event-preview-image {
+    border: 1px solid red;
+    height: 250px;
+    width: 250px;
+}
+
+.event-card-info {
+    color: black;
+}
+
+.event-card-info span {
+    padding: 10px;
+}

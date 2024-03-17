@@ -24,7 +24,7 @@ export default function Groups () {
                 <Link to={`/api/groups/${group.id}`} className='group-card' key={group.id}>
                     <img className='group-preview-image' src={group.previewImage} alt="group's preview image" />
                     <div className='group-card-info'>
-                        <h3>{group.name}</h3>
+                        <h2>{group.name}</h2>
                         <p>{group.city}, {group.state}</p>
                         <p>{group.about}</p>
                         <span>TODO: number of events</span>
