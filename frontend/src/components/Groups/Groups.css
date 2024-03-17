@@ -1,0 +1,28 @@
+.sub-title {
+    padding: 0px 30px;
+}
+
+.group-card {
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    border-top: 1px solid lightslategray;
+}
+
+.group-preview-image {
+    border: 1px solid red;
+    height: 250px;
+    width: 250px;
+}
+
+.group-card-info {
+    color: black;
+}
+
+
+
+.group-card-info span {
+    padding: 10px;
+}

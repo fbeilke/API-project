@@ -16,21 +16,27 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
-  color: white;
-}
-
-.nav-links {
-  display: flex;
-  align-items:center;
-}
-
-.nav-link {
-  display: flex;
-  padding: 15px 10px;
+  border-bottom: 1px solid lightslategray;
 }
 
 .nav-bar-link {
-  color: white;
+  color: red;
   text-decoration: none;
+}
+
+.list-links {
+  margin: 50px 0px;
+}
+
+.list-link {
+  font-size: 30px;
+  padding: 20px;
+  text-decoration: none;
+  color: black;
+  margin: 10px;
+}
+
+.active {
+  color: teal;
+  text-decoration: underline;
 }
