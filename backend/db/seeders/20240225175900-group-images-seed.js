@@ -21,13 +21,19 @@ module.exports = {
     */
     await GroupImage.bulkCreate([
       {
-        groupId: 1
+        groupId: 1,
+        url: "https://res.cloudinary.com/dezjslj5y/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1710778793/txmpeuqylcapkdomtpwt.jpg?_s=public-apps",
+        preview: true
       },
       {
-        groupId: 2
+        groupId: 2,
+        url: "https://res.cloudinary.com/dezjslj5y/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1710778808/qiwwqzvapmzxaaqoxk6w.jpg?_s=public-apps",
+        preview: true
       },
       {
-        groupId: 3
+        groupId: 3,
+        url: "https://res.cloudinary.com/dezjslj5y/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1710779208/uiknylhgxcyqtig2rk87.jpg?_s=public-apps",
+        preview: true
       }
     ], {validate: true})
   },

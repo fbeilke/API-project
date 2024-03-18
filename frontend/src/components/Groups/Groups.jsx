@@ -24,7 +24,9 @@ export default function Groups () {
 
             { !Groups ? null : Groups.map(group => (
                 <Link to={`/groups/${group.id}`} className='group-card' key={group.id}>
-                    <img className='group-preview-image' src={group.previewImage} alt="group's preview image" />
+                    <div className='group-preview-image-container'>
+                        <img className='group-preview-image' src={group.previewImage} alt="group's preview image" />
+                    </div>
                     <div className='group-card-info'>
                         <h2>{group.name}</h2>
                         <p>{group.city}, {group.state}</p>
