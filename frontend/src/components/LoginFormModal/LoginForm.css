@@ -19,3 +19,11 @@ button {
 label {
     margin: 5px 30px;
 }
+
+.demo-user {
+    padding: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+}

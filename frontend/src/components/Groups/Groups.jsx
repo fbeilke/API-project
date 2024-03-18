@@ -12,6 +12,8 @@ export default function Groups () {
         dispatch(fetchAllGroups())
     }, [dispatch])
 
+
+
     return (
         <>
             <div className='list-links'>
@@ -21,13 +23,13 @@ export default function Groups () {
             <p className='sub-title'>Groups in Meetup</p>
 
             { !Groups ? null : Groups.map(group => (
-                <Link to={`/api/groups/${group.id}`} className='group-card' key={group.id}>
+                <Link to={`/groups/${group.id}`} className='group-card' key={group.id}>
                     <img className='group-preview-image' src={group.previewImage} alt="group's preview image" />
                     <div className='group-card-info'>
                         <h2>{group.name}</h2>
                         <p>{group.city}, {group.state}</p>
                         <p>{group.about}</p>
-                        <span>TODO: number of events</span>
+                        <span>TODO: number of events by group</span>
                         <span>{group.private ? 'Private' : 'Public'}</span>
                     </div>
                 </Link>

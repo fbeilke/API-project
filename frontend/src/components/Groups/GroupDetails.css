@@ -1,0 +1,26 @@
+.at-a-glance-details {
+    display: flex;
+    gap: 15px;
+    padding: 30px
+}
+
+
+.aag-info span {
+    padding: 15px;
+}
+
+.group-details-image {
+    height: 300px;
+    width: 500px;
+    border: 1px solid red;
+}
+
+.in-depth-details {
+    background-color: whitesmoke;
+    padding-left: 30px;
+}
+
+.in-depth-details .event-container {
+    width: 80%;
+    background-color: white;
+}
