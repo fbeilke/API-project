@@ -4,15 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllGroups } from '../../store/groups';
 import './Groups.css';
 
+
 export default function Groups () {
     const dispatch = useDispatch();
     const {Groups} = useSelector(state => state.groups)
+
+    console.log('THESE ARE MY GROUPS', Groups)
+
 
     useEffect(() => {
         dispatch(fetchAllGroups())
     }, [dispatch])
 
 
+
+;
 
     return (
         <>
@@ -31,7 +37,7 @@ export default function Groups () {
                         <h2>{group.name}</h2>
                         <p>{group.city}, {group.state}</p>
                         <p>{group.about}</p>
-                        <span>TODO: number of events by group</span>
+                        <span>{group.numEvents} events</span>
                         <span>{group.private ? 'Private' : 'Public'}</span>
                     </div>
                 </Link>

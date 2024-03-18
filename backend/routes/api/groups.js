@@ -253,7 +253,7 @@ router.get('/:groupId/events', async (req, res, next) => {
 
     const allEvents = await Event.findAll({
         attributes: {
-            exclude: ['description', 'capacity', 'price', 'createdAt', 'updatedAt']
+            exclude: ['capacity', 'price', 'createdAt', 'updatedAt']
         },
         include: [
             {
@@ -330,6 +330,10 @@ router.get('/', async (req, res, next) => {
     const allGroupsWith = await Promise.all(allGroups.map(async (group) => {
 
         const jsonGroup = group.toJSON();
+
+        jsonGroup.numEvents = await Event.count({where: {
+            groupId: group.id
+        }})
 
         jsonGroup.numMembers = await Membership.count({where: {
             groupId: group.id

@@ -22,6 +22,7 @@ export default function GroupDetails () {
 
 
     if (!group) return null;
+    if (!byGroup) return null;
 
     return (
 
