@@ -22,7 +22,7 @@ export default function Events () {
             <p className='sub-title'>Events in Meetup</p>
 
             { !Events ? null : Events.map(event => (
-                <Link to={`/api/events/${event.id}`} className='event-container' key={event.id}>
+                <Link to={`/events/${event.id}`} className='event-container' key={event.id}>
                     <div className='event-card' >
                         <img className='event-preview-image' src={event.previewImage} alt="event's preview image" />
                         <div className='event-card-info'>
