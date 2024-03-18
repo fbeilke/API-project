@@ -19,9 +19,16 @@ h1 {
   border-bottom: 1px solid lightslategray;
 }
 
-.nav-bar-link {
+.logo-link {
   color: red;
   text-decoration: none;
+}
+
+.right-side-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
 }
 
 .list-links {
@@ -39,4 +46,11 @@ h1 {
 .active {
   color: teal;
   text-decoration: underline;
+}
+
+.nav-bar-link {
+  color: teal;
+  text-decoration: none;
+  font-size: 20px;
+  list-style: none;
 }

@@ -27,18 +27,28 @@ module.exports = {
     },
     {
       userId: 2,
+      groupId: 1,
+      status: 'Member'
+    },
+    {
+      userId: 3,
+      groupId: 1,
+      status: 'Member'
+    },
+    {
+      userId: 4,
+      groupId: 1,
+      status: 'Member'
+    },
+    {
+      userId: 6,
       groupId: 2,
       status: 'Owner'
     },
     {
-      userId: 3,
+      userId: 7,
       groupId: 3,
       status: 'Owner'
-    },
-    {
-      userId: 2,
-      groupId: 1,
-      status: 'Co-host'
     }
    ], {validate: true})
   },

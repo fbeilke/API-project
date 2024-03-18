@@ -27,12 +27,12 @@ module.exports = {
     },
     {
       eventId: 2,
-      userId: 2,
+      userId: 6,
       status: 'attending'
     },
     {
       eventId: 3,
-      userId: 3,
+      userId: 7,
       status: 'attending'
     }
    ], {validate: true})

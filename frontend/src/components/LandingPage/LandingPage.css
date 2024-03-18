@@ -18,7 +18,7 @@
 
 .intro-img {
     width: 45%;
-    border: 1px solid red;
+    border-radius: 25px;
 }
 
 .how {
@@ -38,8 +38,7 @@
 }
 
 .details-img {
-    border: 1px solid red;
-    width: 150px;
+    border-radius: 25px;
     height: 150px;
     margin: 15px;
 }
@@ -52,9 +51,23 @@
     box-shadow: 3px 3px 0px black;
     border: 1px solid black;
     margin: 20px;
+    cursor: pointer;
 
 }
 
 .details-p {
     width: 80%;
+}
+
+.landing-links {
+    text-decoration: none;
+    font-size: 25px;
+    color: teal;
+}
+
+.no-session-user {
+    text-decoration: none;
+    font-size: 25px;
+    color: lightslategray;
+    cursor: default;
 }

@@ -22,25 +22,53 @@ module.exports = {
     */
     await User.bulkCreate([
       {
-        email: 'demo1@example.com',
-        username: 'demo1',
-        firstName: 'Jay',
-        lastName: 'Doe',
-        hashedPassword: bcrypt.hashSync('password1')
+        email: 'freddy@fazbear.com',
+        username: 'freddyfazbear',
+        firstName: 'Freddy',
+        lastName: 'Fazbear',
+        hashedPassword: bcrypt.hashSync('freddypassword')
       },
       {
-        email: 'demo2@example.com',
-        username: 'demo2',
-        firstName: 'Joe',
-        lastName: 'Doe',
-        hashedPassword: bcrypt.hashSync('password2')
+        email: 'chica@fazbear.com',
+        username: 'chicafazbear',
+        firstName: 'Chica',
+        lastName: 'Fazbear',
+        hashedPassword: bcrypt.hashSync('chicapassword')
       },
       {
-        email: 'demo3@example.com',
-        username: 'demo3',
-        firstName: 'John',
-        lastName: 'Doe',
-        hashedPassword: bcrypt.hashSync('password3')
+        email: 'bonnie@fazbear.com',
+        username: 'bonniefazbear',
+        firstName: 'Bonnie',
+        lastName: 'Fazbear',
+        hashedPassword: bcrypt.hashSync('bonniepassword')
+      },
+      {
+        email:'foxy@fazbear.com',
+        username: 'foxyfazbear',
+        firstName: 'Foxy',
+        lastName: 'Fazbear',
+        hashedPassword: bcrypt.hashSync('foxypassword')
+      },
+      {
+        email: 'mikeschmidt@fazbear.com',
+        username: 'mikeschmidt87',
+        firstName: 'Mike',
+        lastName: 'Schmidt',
+        hashedPassword: bcrypt.hashSync('mikepassword')
+      },
+      {
+        email: 'toyfreddy@fazbear.com',
+        username: 'toyfreddy',
+        firstName: 'Toy',
+        lastName: 'Freddy',
+        hashedPassword: bcrypt.hashSync('toyfreddypassword')
+      },
+      {
+        email: 'glamrockfreddy@fazbear.com',
+        username: 'glamrockfreddy',
+        firstName: 'Glamrock',
+        lastName: 'Freddy',
+        hashedPassword: bcrypt.hashSync('glamrockfreddypassword')
       }
     ], {validate: true})
   },

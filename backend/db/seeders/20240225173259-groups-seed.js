@@ -22,26 +22,26 @@ module.exports = {
    await Group.bulkCreate([
     {
       organizerId: 1,
-      name: 'Group1',
-      about: 'We are group 1 and we need to have a description longer than 50 characters',
+      name: 'Original Fazbear Animatronics',
+      about: "We are the first thought of set of Fazbear animatronics in Five Nights at Freddy's 1. ",
       type: 'In person',
       private: false,
       city: 'New York',
       state: 'NY'
     },
     {
-      organizerId: 2,
-      name: 'Group2',
-      about: 'We are group 2 and we need to have a description longer than 50 characters',
-      type: 'Online',
+      organizerId: 6,
+      name: 'FNAF 2',
+      about: "We are the animatronics from Five Nights at Freddy's 2. We welcome a wider range of members, whether Withered or Toy set, or you want to come visit us for a night.",
+      type: 'In person',
       private: false,
       city: 'New York',
       state: 'NY'
     },
     {
-      organizerId: 3,
-      name: 'PrivateGroup',
-      about: 'We are group 3 and private and we need to have a description longer than 50 characters',
+      organizerId: 7,
+      name: 'Glamrocks',
+      about: "We are the Glamrock animatronics from Five Nights at Freddy's: Security Breach. We are futuristic in design but 80s in aesthetic. We work with all staff bots and Vanessa as head of security.",
       type: 'In person',
       private: true,
       city: 'New York',

@@ -8,10 +8,15 @@ function Navigation({ isLoaded }) {
 
   return (
     <nav className='nav-bar'>
-      <h1><Link to="/" className='nav-bar-link'>Meetup</Link></h1>
-        {isLoaded && (
-            <ProfileButton user={sessionUser} />
-        )}
+      <h1><Link to="/" className='logo-link'>Meetup</Link></h1>
+      <div className='right-side-nav'>
+        {sessionUser ?
+          <Link to='/groups/new' className='nav-bar-link'>Start a new group</Link>
+          : null}
+          {isLoaded && (
+              <ProfileButton user={sessionUser} />
+          )}
+      </div>
     </nav>
   );
 }
