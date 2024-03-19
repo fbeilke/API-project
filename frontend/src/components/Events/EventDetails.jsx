@@ -11,7 +11,7 @@ import './EventDetails.css'
 export default function EventDetails () {
     const dispatch = useDispatch();
     const { eventId } = useParams();
-    const { user } = useSelector(state => state.session)
+    // const { user } = useSelector(state => state.session)
     const { event } = useSelector(state => state.events)
     const { group } = useSelector(state => state.groups)
 

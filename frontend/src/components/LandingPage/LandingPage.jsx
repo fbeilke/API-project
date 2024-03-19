@@ -13,7 +13,7 @@ export default function LandingPage () {
             <div className='intro-container'>
                 <div className='intro'>
                     <h2>The people platform - Where interests become friendships</h2>
-                    <p>This is Finn Beilke's clone of Meetup, where people can join groups and create events based on their interests to meet new people interested in the same things. This site's images and information have been modeled using information from the Five Nights at Freddy's franchise, created by Scott Cawthon.</p>
+                    <p>This is Finn Beilke&apos;s clone of Meetup, where people can join groups and create events based on their interests to meet new people interested in the same things. This site&apos;s images and information have been modeled using information from the Five Nights at Freddy&apos;s franchise, created by Scott Cawthon.</p>
                 </div>
                 <img src='https://res.cloudinary.com/dezjslj5y/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1710779969/FNAF-restaurant_mpvhvc.jpg?_s=public-apps' className='intro-img' alt='image here'/>
             </div>
