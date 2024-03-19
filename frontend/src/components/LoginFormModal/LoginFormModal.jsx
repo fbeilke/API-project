@@ -13,13 +13,14 @@ function LoginFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
+
+
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
-          setErrors(data.errors);
+          setErrors(data.errors)
         }
       });
   };
@@ -27,29 +28,25 @@ function LoginFormModal() {
   return (
     <>
       <h1>Log In</h1>
+      { errors.message === 'Invalid credentials' ? <p className='errors'>The provided credentials were invalid</p> : null}
       <form onSubmit={handleSubmit} className='login'>
-        <label>
-          Username or Email
           <input
+            placeholder='Username or email'
             className='login-input'
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Password
           <input
+            placeholder='password'
             className='login-input'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <button className='submit-button' type="submit" disabled={credential.length < 4 || password.length < 6 ? true : false}>Log In</button>
         <button
           type="submit"
           className='demo-user'

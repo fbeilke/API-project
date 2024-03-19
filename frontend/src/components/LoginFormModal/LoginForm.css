@@ -10,14 +10,12 @@ h1 {
 
 .login-input {
     margin: 5px 30px;
+    width: 300px;
 }
 
-button {
+.submit-button {
     margin: 10px;
-}
-
-label {
-    margin: 5px 30px;
+    box-shadow: 5px 5px 1px black;
 }
 
 .demo-user {
@@ -26,4 +24,10 @@ label {
     cursor: pointer;
     border: none;
     background-color: white;
+    color: teal;
+}
+
+.errors {
+    color: red;
+    text-align: center;
 }

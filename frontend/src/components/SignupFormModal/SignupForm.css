@@ -8,11 +8,16 @@ form {
     align-items: center;
 }
 
-input,
-label {
-    margin: 5px 30px
+input {
+    margin: 5px 30px;
+    width: 300px;
 }
 
-button {
+.signup-button {
     margin: 10px;
+    box-shadow: 5px 5px 1px black;
+}
+
+.errors {
+    color: red;
 }
