@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/fbeilke/API-project/issues"
   },
-  "homepage": "https://github.com/fbeilke/API-project#readme"
+  "homepage": "https://github.com/fbeilke/API-project#readme",
+  "dependencies": {
+    "react-icons": "^5.0.1"
+  }
 }

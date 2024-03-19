@@ -2,13 +2,13 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleGroup } from '../../store/groups';
-import './GroupDetails.css';
 import { fetchEventsByGroup } from '../../store/events';
+import './GroupDetails.css';
 
 export default function GroupDetails () {
-    const { user } = useSelector(state => state.session)
     const dispatch = useDispatch();
     const { groupId } = useParams();
+    const { user } = useSelector(state => state.session)
     const { group } = useSelector(state => state.groups)
     const { byGroup } = useSelector(state => state.events)
     const today = new Date();
@@ -50,11 +50,12 @@ export default function GroupDetails () {
                     if (today < new Date(eachEvent.startDate)) return (
                         <>
                             <h3>Upcoming Events ({++numOfEvents})</h3>
-                            <Link to={`/api/events/${eachEvent.id}`} className='event-container' key={eachEvent.id}>
+                            <Link to={`/events/${eachEvent.id}`} className='event-container' key={eachEvent.id}>
                                 <div className='event-card' >
                                     <img className='event-preview-image' src={eachEvent.previewImage} alt="event's preview image" />
                                     <div className='event-card-info'>
                                         <span className='start-date'>{eachEvent.startDate.slice(0, 10)}</span>
+                                        <span>·</span>
                                         <span className='start-time'>{eachEvent.startDate.slice(11, 16)}</span>
                                         <h4>{eachEvent.name}</h4>
                                         {eachEvent.type === 'In person' ? <p className='event-location'>{eachEvent.Venue.city}, {eachEvent.Venue.state}</p> : <p className='online-event-tag'>{eachEvent.type}</p>}
@@ -70,11 +71,12 @@ export default function GroupDetails () {
                     if (today > new Date(eachEvent.startDate)) return (
                         <>
                             <h3>Past Events ({++numOfEvents})</h3>
-                            <Link to={`/api/events/${eachEvent.id}`} className='event-container' key={eachEvent.id}>
+                            <Link to={`/events/${eachEvent.id}`} className='event-container' key={eachEvent.id}>
                                 <div className='event-card' >
                                     <img className='event-preview-image' src={eachEvent.previewImage} alt="event's preview image" />
                                     <div className='event-card-info'>
                                         <span className='start-date'>{eachEvent.startDate.slice(0, 10)}</span>
+                                        <span>·</span>
                                         <span className='start-time'>{eachEvent.startDate.slice(11, 16)}</span>
                                         <h4>{eachEvent.name}</h4>
                                         {eachEvent.type === 'In person' ? <p className='event-location'>{eachEvent.Venue.city}, {eachEvent.Venue.state}</p> : <p className='online-event-tag'>{eachEvent.type}</p>}

@@ -1,7 +1,10 @@
 import { csrfFetch } from './csrf.js';
 
 const LIST_EVENTS = 'eventsReducer/listEvents';
+
 const LIST_BY_GROUP = 'eventsReducer/listByGroup';
+
+const SINGLE_EVENT = 'eventsReducer/singleEvent';
 
 function listEvents(events) {
    return {
@@ -15,6 +18,13 @@ function listByGroup(events) {
     return {
         type: LIST_BY_GROUP,
         events
+    }
+}
+
+function singleEvent(event) {
+    return {
+        type: SINGLE_EVENT,
+        event
     }
 }
 
@@ -42,6 +52,18 @@ export const fetchEventsByGroup = (groupId) => async (dispatch) => {
     }
 }
 
+export const fetchSingleEvent = (eventId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}`);
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(singleEvent(data))
+        return data;
+    } else {
+        console.log('ERROR IN FETCHSINGLEEVENT');
+    }
+}
+
 const initialState = {events: null}
 
 
@@ -52,6 +74,9 @@ export default function eventsReducer (state = initialState, action) {
         }
         case LIST_BY_GROUP: {
             return {...state, byGroup: action.events}
+        }
+        case SINGLE_EVENT: {
+            return {...state, event: action.event}
         }
         default:
             return state;

@@ -7,11 +7,33 @@ import './Events.css';
 export default function Events () {
     const dispatch = useDispatch();
     const {Events} = useSelector(state => state.events)
-    console.log('THIS IS EVENTS DETAILS', Events)
+    const today = new Date();
 
     useEffect(() => {
         dispatch(fetchAllEvents())
     }, [dispatch])
+
+
+    if (!Events) return null;
+
+    Events.sort((a,b) => {
+        const aDate = new Date(a.startDate)
+        const bDate = new Date(b.startDate)
+        let total = 0;
+        if(aDate > today && bDate > today) {
+           aDate < bDate ? total = -1 : total = 1
+        } else if (aDate < today && bDate > today) {
+            total = 1
+        } else if (aDate > today && bDate < today) {
+            total = -1
+        } else if (aDate < today && bDate < today) {
+            aDate < bDate ? total = 1 : total = -1
+        }
+
+        return total;
+    })
+
+
 
     return (
         <>
@@ -21,12 +43,13 @@ export default function Events () {
             </div>
             <p className='sub-title'>Events in Meetup</p>
 
-            { !Events ? null : Events.map(event => (
+            {Events.map(event => (
                 <Link to={`/events/${event.id}`} className='event-container' key={event.id}>
                     <div className='event-card' >
                         <img className='event-preview-image' src={event.previewImage} alt="event's preview image" />
                         <div className='event-card-info'>
                             <span className='start-date'>{event.startDate.slice(0, 10)}</span>
+                            <span>·</span>
                             <span className='start-time'>{event.startDate.slice(11, 16)}</span>
                             <h2>{event.name}</h2>
                             {event.type === 'In person' ? <p className='event-location'>{event.Venue.city}, {event.Venue.state}</p> : <p className='online-event-tag'>{event.type}</p>}

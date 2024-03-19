@@ -54,8 +54,7 @@ function ProfileButton({ user }) {
               <Link to="/events" className='dropdown-link'>View events</Link>
             </div>
             <div className='dropdown-info'>
-              <li>{user.username}</li>
-              <li>{user.firstName} {user.lastName}</li>
+              <li>Hello {user.firstName},</li>
               <li>{user.email}</li>
               <li>
                 <button className='logout-button' onClick={logout}>Log Out</button>
