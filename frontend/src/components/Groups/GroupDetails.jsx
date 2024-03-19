@@ -6,6 +6,7 @@ import './GroupDetails.css';
 import { fetchEventsByGroup } from '../../store/events';
 
 export default function GroupDetails () {
+    const { user } = useSelector(state => state.session)
     const dispatch = useDispatch();
     const { groupId } = useParams();
     const { group } = useSelector(state => state.groups)
@@ -32,10 +33,12 @@ export default function GroupDetails () {
                 <img src={group.GroupImages[0].url} alt="group's first image" className='group-details-image'/>
                 <div className='aag-info'>
                     <h2>{group.name}</h2>
+                    <p>{group.city}, {group.state}</p>
                     <span>{byGroup.Events.length} events</span>
+                    <span>·</span>
                     <span>{group.private === true ? 'Private' : 'Public'}</span>
                     <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
-                    <button onClick={() => alert("Feature coming soon!")}>Join this group</button>
+                    {user ? <button className='join-button' onClick={() => alert("Feature coming soon!")}>Join this group</button> : null}
                 </div>
             </div>
             <div className='in-depth-details'>

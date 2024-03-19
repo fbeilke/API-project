@@ -38,6 +38,7 @@ export default function Groups () {
                         <p>{group.city}, {group.state}</p>
                         <p>{group.about}</p>
                         <span>{group.numEvents} events</span>
+                        <span>·</span>
                         <span>{group.private ? 'Private' : 'Public'}</span>
                     </div>
                 </Link>

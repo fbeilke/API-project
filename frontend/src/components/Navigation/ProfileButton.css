@@ -28,17 +28,27 @@
     cursor: pointer;
 }
 
-.dropdown-info {
-    padding: 15px;
-    border: 1px solid white;
-}
-
 .logout-button {
     width: 150px;
 }
 
-.dropdown-link {
+.dropdown-info {
     padding: 15px;
+    list-style: none;
+}
+
+.dropdown-links {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.dropdown-link {
+    color: teal;
+    padding: 15px;
+    border: 1px solid white;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 button {

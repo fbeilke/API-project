@@ -22,3 +22,8 @@
     width: 80%;
     background-color: white;
 }
+
+.join-button {
+    color: white;
+    background-color: red;
+}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
@@ -47,14 +48,20 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li className='dropdown-info'>{user.username}</li>
-            <li className='dropdown-info'>{user.firstName} {user.lastName}</li>
-            <li className='dropdown-info'>{user.email}</li>
-            <li>
-              <button className='logout-button' onClick={logout}>Log Out</button>
-            </li>
-          </>
+          <div>
+            <div className='dropdown-links'>
+              <Link to="/groups" className='dropdown-link'>View groups</Link>
+              <Link to="/events" className='dropdown-link'>View events</Link>
+            </div>
+            <div className='dropdown-info'>
+              <li>{user.username}</li>
+              <li>{user.firstName} {user.lastName}</li>
+              <li>{user.email}</li>
+              <li>
+                <button className='logout-button' onClick={logout}>Log Out</button>
+              </li>
+            </div>
+          </div>
         ) : (
           <>
             <div className='login-signup-links'>
