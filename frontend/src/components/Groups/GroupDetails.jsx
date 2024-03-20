@@ -30,7 +30,7 @@ export default function GroupDetails () {
         <div className='group-details-page'>
             <Link to='/groups'>Back to groups</Link>
             <div className='at-a-glance-details'>
-                <img src={group.GroupImages[0].url} alt="group's first image" className='group-details-image'/>
+                <img src={!group.GroupImages[0] ? '' : group.GroupImages[0].url} alt="group's first image" className='group-details-image'/>
                 <div className='aag-info'>
                     <h2>{group.name}</h2>
                     <p>{group.city}, {group.state}</p>
@@ -38,7 +38,14 @@ export default function GroupDetails () {
                     <span>·</span>
                     <span>{group.private === true ? 'Private' : 'Public'}</span>
                     <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
-                    {user ? <button className='join-button' onClick={() => alert("Feature coming soon!")}>Join this group</button> : null}
+                    {user && user.id !== group.organizerId ? <button className='join-button' onClick={() => alert("Feature coming soon!")}>Join this group</button> : null}
+                    { user && user.id === group.organizerId ?
+                    <div className='organizer-buttons-container'>
+                        <button className='organizer-buttons'>Create Event</button>
+                        <button className='organizer-buttons'>Update</button>
+                        <button className='organizer-buttons'>Delete</button>
+                    </div>
+                    : null}
                 </div>
             </div>
             <div className='in-depth-details'>
@@ -46,7 +53,8 @@ export default function GroupDetails () {
                 <p>{group.Organizer.firstName} {group.Organizer.lastName}</p>
                 <h3>What we&apos;re about</h3>
                 <p>{group.about}</p>
-                {byGroup.Events.map((eachEvent, numOfEvents = 0) => {
+                {byGroup.Events.length === 0 ? <h3>No upcoming events</h3> :
+                byGroup.Events.map((eachEvent, numOfEvents = 0) => {
                     if (today < new Date(eachEvent.startDate)) return (
                         <>
                             <h3>Upcoming Events ({++numOfEvents})</h3>
@@ -67,7 +75,8 @@ export default function GroupDetails () {
 
                     );
                 })}
-                {byGroup.Events.map((eachEvent,numOfEvents = 0) => {
+                {byGroup.Events.length === 0 ? null :
+                byGroup.Events.map((eachEvent,numOfEvents = 0) => {
                     if (today > new Date(eachEvent.startDate)) return (
                         <>
                             <h3>Past Events ({++numOfEvents})</h3>
@@ -88,9 +97,8 @@ export default function GroupDetails () {
                     )
                     return null;
 
-                })
+                })}
 
-            }
 
             </div>
         </div>

@@ -6,7 +6,6 @@ import './LandingPage.css';
 
 export default function LandingPage () {
     const {user} = useSelector(state => state.session)
-    console.log(user);
 
     return (
         <div className='landing-container'>

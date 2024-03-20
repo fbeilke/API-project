@@ -27,3 +27,15 @@
     color: white;
     background-color: red;
 }
+
+.organizer-buttons-container {
+    display: flex;
+    gap: 15px;
+}
+
+.organizer-buttons {
+    height: 20px;
+    width: 100px;
+    background-color: lightslategray;
+
+}
