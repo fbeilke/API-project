@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleGroup } from '../../store/groups';
 import { fetchEventsByGroup } from '../../store/events';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import DeleteGroupModal from './DeleteGroupModal'
 import './GroupDetails.css';
 
 export default function GroupDetails () {
@@ -43,7 +45,12 @@ export default function GroupDetails () {
                     <div className='organizer-buttons-container'>
                         <button className='organizer-buttons'>Create Event</button>
                         <button className='organizer-buttons'>Update</button>
-                        <button className='organizer-buttons'>Delete</button>
+                        <button className='organizer-buttons'>
+                            <OpenModalMenuItem
+                                itemText="Delete"
+                                modalComponent={<DeleteGroupModal />}
+                            />
+                        </button>
                     </div>
                     : null}
                 </div>

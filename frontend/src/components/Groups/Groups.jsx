@@ -9,8 +9,6 @@ export default function Groups () {
     const dispatch = useDispatch();
     const {Groups} = useSelector(state => state.groups)
 
-    console.log('THESE ARE MY GROUPS', Groups)
-
 
     useEffect(() => {
         dispatch(fetchAllGroups())

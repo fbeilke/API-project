@@ -17,30 +17,15 @@ export default function CreateNewGroup() {
     const [isPrivate, setIsPrivate] = useState('');
     const [url, setUrl] = useState('');
     const [validators, setValidators] = useState({});
-    const groups = useSelector(state => state.groups)
-
-    console.log('THESE ARE MY GROUPS', groups)
-
-    console.log('THESE ARE MY ERRORS', validators)
 
 
     if (!user) navigate('/');
 
-    function resetInputs() {
-        setCity('');
-        setState('');
-        setName('');
-        setAbout('');
-        setType('');
-        setIsPrivate('');
-        setUrl('');
-    }
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         const errors = {}
-        let group;
 
         if (!city.length || !state.length) errors.location = 'Location is required';
         if (!name.length) errors.name = 'Name is required';
@@ -59,23 +44,20 @@ export default function CreateNewGroup() {
                 type,
                 private: isPrivate,
                 city,
-                state
+                state,
+                url
             }
 
-           group = await dispatch(postNewGroup(payload)).catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) {
-                    setValidators(data.errors);
-                }
-            })
+           const group = await dispatch(postNewGroup(payload))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) {
+                        setValidators(data.errors);
+                    }
+                })
+
+            await navigate(`/groups/${group.id}`);
         }
-
-        if (Object.values(validators).length === 0) {
-            resetInputs();
-            navigate(`/groups/${group.id}`)
-        }
-
-
     }
 
     return (
@@ -92,7 +74,6 @@ export default function CreateNewGroup() {
                             type='text'
                             value={city}
                             onChange={e => setCity(e.target.value)}
-
                         />
                         <input
                             placeholder='STATE'

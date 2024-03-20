@@ -35,8 +35,6 @@ export const fetchAllEvents = () => async (dispatch) => {
     if(response.ok) {
         const data = await response.json()
         dispatch(listEvents(data));
-    } else {
-        console.log('ERROR IN FETCHALLEVENTS')
     }
 }
 
@@ -47,8 +45,6 @@ export const fetchEventsByGroup = (groupId) => async (dispatch) => {
         const data = await response.json();
         dispatch(listByGroup(data));
         return data;
-    } else {
-        console.log('ERROR IN FETCHEVENTSBYGROUP')
     }
 }
 
@@ -59,8 +55,6 @@ export const fetchSingleEvent = (eventId) => async (dispatch) => {
         const data = await response.json();
         dispatch(singleEvent(data))
         return data;
-    } else {
-        console.log('ERROR IN FETCHSINGLEEVENT');
     }
 }
 

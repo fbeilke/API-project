@@ -6,7 +6,7 @@ const SINGLE_GROUP = 'groupsReducer/singleGroup';
 
 const CREATE_NEW_GROUP = 'groupsReducer/createNewGroup';
 
-const ADD_IMAGE = 'groupsReducer/addGroupImage';
+const DELETE_GROUP = 'groupsReducer/deleteGroup'
 
 function listGroups(groups) {
    return {
@@ -29,10 +29,10 @@ function createNewGroup(group) {
     }
 }
 
-function addImage(payload) {
+function deleteGroup(groupId) {
     return {
-        type: ADD_IMAGE,
-        payload
+        type: DELETE_GROUP,
+        groupId
     }
 }
 
@@ -57,24 +57,43 @@ export const fetchSingleGroup = (groupId) => async (dispatch) => {
 export const postNewGroup = (payload) => async (dispatch) => {
     const response = await csrfFetch(`/api/groups`, {
         method: 'POST',
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+            name: payload.name,
+            about: payload.about,
+            type: payload.type,
+            private: payload.private,
+            city: payload.city,
+            state: payload.state
+
+        })
     })
 
     if (response.ok) {
         const data = await response.json();
-        dispatch(createNewGroup(data));
+        dispatch(addGroupImage(payload, data));
+        return data;
     }
 }
 
-export const addGroupImage = (groupId, url) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups/${groupId}/images`, {
+export const addGroupImage = ({url}, data) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${data.id}/images`, {
         method: 'POST',
         body: JSON.stringify({url, preview: true})
     })
 
     if (response.ok) {
-        const data = await response.json()
-        dispatch(addImage(data))
+        data.GroupImages = await response.json()
+        dispatch(createNewGroup(data))
+    }
+}
+
+export const removeGroup = (groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: 'DELETE',
+    })
+
+    if (response.ok) {
+        dispatch(deleteGroup(groupId))
     }
 }
 
@@ -92,8 +111,12 @@ export default function groupsReducer (state = initialState, action) {
         case CREATE_NEW_GROUP: {
             return {...state, [action.group.id]: action.group}
         }
-        case ADD_IMAGE: {
-            return {...state, [state.group.GroupImages[action.payload.id]]: action.payload.url}
+        case DELETE_GROUP: {
+            const newState = {...state}
+            delete newState[action.groupId]
+            newState.group = null;
+            console.log(newState)
+            return newState
         }
         default:
             return state;
