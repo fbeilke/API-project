@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postNewGroup } from '../../store/groups';
-import { addGroupImage } from '../../store/groups';
 import './CreateNewGroup.css';
 
 
@@ -72,7 +71,6 @@ export default function CreateNewGroup() {
         }
 
         if (Object.values(validators).length === 0) {
-            await dispatch(addGroupImage(group.id, url))
             resetInputs();
             navigate(`/groups/${group.id}`)
         }
@@ -83,10 +81,10 @@ export default function CreateNewGroup() {
     return (
         <>
             <h2>Start a new group</h2>
-            <p className='create-group-intro'>We'll walk you through a few steps to build your local community.</p>
+            <p className='create-group-intro'>We&apos;ll walk you through a few steps to build your local community.</p>
             <form className='create-group-form' onSubmit={handleSubmit}>
                 <div className='create-group-section'>
-                    <h3>Set your group's location.</h3>
+                    <h3>Set your group&apos;s location.</h3>
                     <p>Meetup groups meet locally, in person, and online. We&apos;ll connect you with people in your area.</p>
                     <div className='create-group-location'>
                         <input
@@ -107,7 +105,7 @@ export default function CreateNewGroup() {
                     {validators.location && <p className='errors'>{validators.location}</p>}
                 </div>
                 <div className='create-group-section'>
-                    <h3>What will your group's name be?</h3>
+                    <h3>What will your group&apos;s name be?</h3>
                     <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
                     <input
                         placeholder='What is your group name?'

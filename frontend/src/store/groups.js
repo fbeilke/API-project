@@ -6,7 +6,7 @@ const SINGLE_GROUP = 'groupsReducer/singleGroup';
 
 const CREATE_NEW_GROUP = 'groupsReducer/createNewGroup';
 
-const ADD_FIRST_IMAGE = 'groupsReducer/addGroupImage';
+const ADD_IMAGE = 'groupsReducer/addGroupImage';
 
 function listGroups(groups) {
    return {
@@ -29,9 +29,9 @@ function createNewGroup(group) {
     }
 }
 
-function addFirstImage(payload) {
+function addImage(payload) {
     return {
-        type: ADD_GROUP_IMAGE,
+        type: ADD_IMAGE,
         payload
     }
 }
@@ -74,7 +74,7 @@ export const addGroupImage = (groupId, url) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-        dispatch(addFirstImage(data))
+        dispatch(addImage(data))
     }
 }
 
@@ -92,8 +92,8 @@ export default function groupsReducer (state = initialState, action) {
         case CREATE_NEW_GROUP: {
             return {...state, [action.group.id]: action.group}
         }
-        case ADD_FIRST_IMAGE: {
-            return {...state, [group.GroupImages[0]]: action.payload.url}
+        case ADD_IMAGE: {
+            return {...state, [state.group.GroupImages[action.payload.id]]: action.payload.url}
         }
         default:
             return state;
