@@ -64,24 +64,29 @@ export const fetchSingleGroup = (groupId) => async (dispatch) => {
 }
 
 export const postNewGroup = (payload) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups`, {
-        method: 'POST',
-        body: JSON.stringify({
-            name: payload.name,
-            about: payload.about,
-            type: payload.type,
-            private: payload.private,
-            city: payload.city,
-            state: payload.state
+    try {
+        const response = await csrfFetch(`/api/groups`, {
+            method: 'POST',
+            body: JSON.stringify({
+                name: payload.name,
+                about: payload.about,
+                type: payload.type,
+                private: payload.private,
+                city: payload.city,
+                state: payload.state
 
+            })
         })
-    })
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(addGroupImage(payload, data));
-        return data;
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(addGroupImage(payload, data));
+            return data;
+        }
+    } catch (err) {
+        return err;
     }
+
 }
 
 export const addGroupImage = ({url}, data) => async (dispatch) => {
@@ -107,24 +112,29 @@ export const removeGroup = (groupId) => async (dispatch) => {
 }
 
 export const submitUpdateGroup = (groupId, payload) => async (dispatch) => {
-    const body = {
-        name: payload.name,
-        about: payload.about,
-        type: payload.type,
-        private: payload.private,
-        city: payload.city,
-        state: payload.state
-    }
+    try {
+        const body = {
+            name: payload.name,
+            about: payload.about,
+            type: payload.type,
+            private: payload.private,
+            city: payload.city,
+            state: payload.state
+        }
 
-    const response = await csrfFetch(`/api/groups/${groupId}`, {
-        method: 'PUT',
-        body: JSON.stringify(body)
-    })
+        const response = await csrfFetch(`/api/groups/${groupId}`, {
+            method: 'PUT',
+            body: JSON.stringify(body)
+        })
 
-    if (response.ok) {
-        const data = await response.json();
-        data.GroupImages = payload.image
-        dispatch(updateGroup(data))
+        if (response.ok) {
+            const data = await response.json();
+            data.GroupImages = payload.image
+            dispatch(updateGroup(data))
+            return data
+        }
+    } catch (err) {
+        return err
     }
 }
 

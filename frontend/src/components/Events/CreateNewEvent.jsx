@@ -39,7 +39,7 @@ export default function CreateNewEvent() {
 
         setValidators(errors)
 
-        if (Object.values(validators).length === 0) {
+        if (Object.values(errors).length === 0) {
             const payload = {
                 name,
                 type,
@@ -51,8 +51,8 @@ export default function CreateNewEvent() {
             }
 
             const response = await dispatch(postNewEvent(payload, groupId))
-            console.log(response)
-            if (!response.id) {
+
+            if (response && !response.id) {
                 setValidators({error: `There was an error, unable to submit`})
             } else {
                 await navigate(`/events/${response.id}`);

@@ -115,7 +115,7 @@ export default function EventDetails () {
                     </div>
                 </div>
                 <div className='about'>
-                    <h3>Details</h3>
+                    <h3>Description</h3>
                     <p>{event.description}</p>
                 </div>
             </div>

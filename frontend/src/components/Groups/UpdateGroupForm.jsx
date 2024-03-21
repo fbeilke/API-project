@@ -9,7 +9,7 @@ export default function UpdateGroupForm() {
     const navigate = useNavigate();
     const { groupId } = useParams();
     const {user} = useSelector(state => state.session);
-    const {group} = useSelector(state => state.groups);
+    const groups = useSelector(state => state.groups);
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [name, setName] = useState('');
@@ -18,14 +18,19 @@ export default function UpdateGroupForm() {
     const [isPrivate, setIsPrivate] = useState('');
     const [validators, setValidators] = useState({});
 
+    const { group } = groups;
+
+    if (!groups || !user || !group || user.id !== group.organizerId) navigate('/')
 
     useEffect(() => {
-        setCity(group.city);
-        setState(group.state);
-        setName(group.name);
-        setAbout(group.about);
-        setType(group.type);
-        setIsPrivate(group.private);
+        if (group) {
+            setCity(group.city);
+            setState(group.state);
+            setName(group.name);
+            setAbout(group.about);
+            setType(group.type);
+            setIsPrivate(group.private);
+        }
 
     }, [group])
 
@@ -44,7 +49,7 @@ export default function UpdateGroupForm() {
         setValidators(errors)
 
 
-        if (Object.values(validators).length === 0) {
+        if (Object.values(errors).length === 0) {
            const payload = {
                 name,
                 about,
@@ -55,14 +60,18 @@ export default function UpdateGroupForm() {
                 image: group.GroupImages
             }
 
-            await dispatch(submitUpdateGroup(groupId, payload))
+            const response = await dispatch(submitUpdateGroup(groupId, payload))
 
-            navigate(`/groups/${groupId}`);
+            if (response && !response.id) {
+                setValidators({error: 'There was an error, unable to submit'})
+            } else {
+                navigate(`/groups/${groupId}`);
+            }
+
         }
     }
 
 
-    if (!user || !group) navigate('/')
 
 
 
@@ -134,7 +143,7 @@ export default function UpdateGroupForm() {
                     </select>
                     {validators.isPrivate && <p className='errors'>{validators.isPrivate}</p>}
                 </div>
-                {Object.values(validators).length !== 0 && <p className='errors'>There was an error, unable to submit.</p>}
+                {validators.error && <p className='errors'>{validators.error}</p>}
                 <div className='button-container'>
                     <button className='update-group-button' type='submit'>Update group</button>
                 </div>

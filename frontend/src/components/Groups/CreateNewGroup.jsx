@@ -37,7 +37,7 @@ export default function CreateNewGroup() {
         setValidators(errors)
 
 
-        if (Object.values(validators).length === 0) {
+        if (Object.values(errors).length === 0) {
            const payload = {
                 name,
                 about,
@@ -50,7 +50,11 @@ export default function CreateNewGroup() {
 
            const group = await dispatch(postNewGroup(payload))
 
+           if (group && !group.id) {
+            setValidators({error: 'There was an error, unable to submit'})
+           } else {
             await navigate(`/groups/${group.id}`);
+           }
         }
     }
 
@@ -129,7 +133,7 @@ export default function CreateNewGroup() {
                     />
                     {validators.url && <p className='errors'>{validators.url}</p>}
                 </div>
-                {Object.values(validators).length !== 0 && <p className='errors'>There was an error, unable to submit.</p>}
+                {validators.error && <p className='errors'>{validators.error}</p>}
                 <div className='button-container'>
                     <button className='create-group-button' type='submit'>Create group</button>
                 </div>
