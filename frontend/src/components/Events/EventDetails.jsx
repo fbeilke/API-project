@@ -48,7 +48,7 @@ export default function EventDetails () {
 
     return (
         <>
-            <Link to='/events'>Back to events</Link>
+            <Link to='/events' className='back-to-events'>Back to events</Link>
             <div className='event-detail-header'>
                 <h2>{event.name}</h2>
                 <p>Hosted by {group.Organizer.firstName} {group.Organizer.lastName}</p>

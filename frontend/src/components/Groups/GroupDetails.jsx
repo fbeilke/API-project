@@ -30,7 +30,7 @@ export default function GroupDetails () {
     return (
 
         <div className='group-details-page'>
-            <Link to='/groups'>Back to groups</Link>
+            <Link to='/groups' className='back-to-groups'>Back to groups</Link>
             <div className='at-a-glance-details'>
                 <img src={!group.GroupImages[0] ? '' : group.GroupImages[0].url} alt="group's first image" className='group-details-image'/>
                 <div className='aag-info'>

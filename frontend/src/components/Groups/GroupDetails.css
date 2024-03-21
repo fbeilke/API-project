@@ -26,6 +26,8 @@
 .join-button {
     color: white;
     background-color: red;
+    width: 200px;
+    padding: 15px 30px;
 }
 
 .organizer-buttons-container {
@@ -46,4 +48,8 @@
 .delete-group-modal {
     height: 20px;
     width: 100px;
+}
+
+.back-to-groups {
+    color: teal;
 }

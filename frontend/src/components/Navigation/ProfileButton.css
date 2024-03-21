@@ -55,4 +55,10 @@ button {
     width: 200px;
     height: 50px;
     cursor: pointer;
+    margin-top: 15px;
+}
+
+.dropdown-email {
+    font-size: 11px;
+    padding: 5px;
 }
