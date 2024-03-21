@@ -58,7 +58,7 @@ export default function EventDetails () {
                     <img className='event-image' src={event.EventImages[0].url} alt='first event image'/>
                     <div className='details-right-side'>
                         <Link to={`/groups/${event.groupId}`} className='event-group-card'>
-                            <img className='group-image' src={group.GroupImages[0].url} alt="group's preview image" />
+                            <img className='group-image' src={!group.GroupImages[0] ? '' : group.GroupImages[0].url} alt="group's preview image" />
                             <div className='event-group-details'>
                                 <p>{event.Group.name}</p>
                                 <p>{event.Group.private === true ? 'Private' : 'Public'}</p>
