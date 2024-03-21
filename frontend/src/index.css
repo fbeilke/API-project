@@ -1,1 +1,25 @@
-/* TODO: Add sitewide styles */
+
+h2 {
+    font-family: 'Shantell Sans', sans-serif;
+}
+
+h3 {
+    font-family: 'Shantell Sans', sans-serif;
+    font-weight: 500;
+}
+
+a,
+button {
+    font-family: 'Comfortaa', sans-serif;
+}
+
+h1 a {
+    font-family: 'Shantell Sans', sans-serif;
+    font-weight: 800;
+}
+
+p,
+span,
+div {
+    font-family: 'Comfortaa', sans-serif;
+}
