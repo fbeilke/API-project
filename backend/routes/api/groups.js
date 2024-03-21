@@ -513,21 +513,24 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
 router.post('/:groupId/events', requireAuth, isOwnerOrCohostMember, validateEvent, async (req, res, next) => {
     const { groupId } = req.params;
     let { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+        console.log('-------------------------', groupId)
 
-    const validVenue = await Venue.findOne({
-        where: {
-            id: venueId,
-            groupId
-        }
-    });
+    // Current implementation doesn't make use of venue information;
 
-    if (!validVenue && venueId !== null) {
-        const err = new Error("Venue couldn't be found");
-        err.title = "Couldn't find a Venue with the specified id";
-        err.status = 404;
-        next(err);
-        return;
-    }
+    // const validVenue = await Venue.findOne({
+    //     where: {
+    //         id: venueId,
+    //         groupId
+    //     }
+    // });
+
+    // if (!validVenue && venueId !== null) {
+    //     const err = new Error("Venue couldn't be found");
+    //     err.title = "Couldn't find a Venue with the specified id";
+    //     err.status = 404;
+    //     next(err);
+    //     return;
+    // }
 
     const newEvent = await Event.create({
         groupId,
@@ -540,7 +543,7 @@ router.post('/:groupId/events', requireAuth, isOwnerOrCohostMember, validateEven
         startDate,
         endDate
     })
-
+    console.log('BIG NEW EVENT =======', newEvent)
     const firstAttendee = await Attendance.create({
         eventId: newEvent.id,
         userId: req.user.id,

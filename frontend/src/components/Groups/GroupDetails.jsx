@@ -43,10 +43,15 @@ export default function GroupDetails () {
                     {user && user.id !== group.organizerId ? <button className='join-button' onClick={() => alert("Feature coming soon!")}>Join this group</button> : null}
                     { user && user.id === group.organizerId ?
                     <div className='organizer-buttons-container'>
-                        <button className='organizer-buttons'>Create Event</button>
-                        <button className='organizer-buttons'>Update</button>
+                        <Link to={`/groups/${group.id}/events/new`}>
+                            <button className='organizer-buttons'>Create Event</button>
+                        </Link>
+                        <Link to={`/groups/${group.id}/update`}>
+                            <button className='organizer-buttons'>Update</button>
+                        </Link>
                         <button className='organizer-buttons'>
                             <OpenModalMenuItem
+                                className='delete-group-modal'
                                 itemText="Delete"
                                 modalComponent={<DeleteGroupModal />}
                             />
@@ -73,7 +78,7 @@ export default function GroupDetails () {
                                         <span>·</span>
                                         <span className='start-time'>{eachEvent.startDate.slice(11, 16)}</span>
                                         <h4>{eachEvent.name}</h4>
-                                        {eachEvent.type === 'In person' ? <p className='event-location'>{eachEvent.Venue.city}, {eachEvent.Venue.state}</p> : <p className='online-event-tag'>{eachEvent.type}</p>}
+                                        {eachEvent.type === 'In person' ? <p className='event-location'>{eachEvent.Group.city}, {eachEvent.Group.state}</p> : <p className='online-event-tag'>{eachEvent.type}</p>}
                                     </div>
                                 </div>
                                 <div className='event-description'>{eachEvent.description}</div>
@@ -95,7 +100,7 @@ export default function GroupDetails () {
                                         <span>·</span>
                                         <span className='start-time'>{eachEvent.startDate.slice(11, 16)}</span>
                                         <h4>{eachEvent.name}</h4>
-                                        {eachEvent.type === 'In person' ? <p className='event-location'>{eachEvent.Venue.city}, {eachEvent.Venue.state}</p> : <p className='online-event-tag'>{eachEvent.type}</p>}
+                                        {eachEvent.type === 'In person' ? <p className='event-location'>{eachEvent.Group.city}, {eachEvent.Group.state}</p> : <p className='online-event-tag'>{eachEvent.type}</p>}
                                     </div>
                                 </div>
                                 <div className='event-description'>{eachEvent.description}</div>

@@ -52,7 +52,7 @@ export default function Events () {
                             <span>·</span>
                             <span className='start-time'>{event.startDate.slice(11, 16)}</span>
                             <h2>{event.name}</h2>
-                            {event.type === 'In person' ? <p className='event-location'>{event.Venue.city}, {event.Venue.state}</p> : <p className='online-event-tag'>{event.type}</p>}
+                            {event.type === 'In person' ? <p className='event-location'>{event.Group.city}, {event.Group.state}</p> : <p className='online-event-tag'>{event.type}</p>}
                         </div>
                     </div>
                     <div className='event-description'>{event.description}</div>

@@ -1,0 +1,43 @@
+.create-event-container {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.section-one {
+    width: 600px;
+}
+
+.section-one h2,
+.section-one p,
+.section-one input {
+    margin: 5px 30px;
+}
+
+
+
+.create-event-section {
+    border-top: 1px solid lightslategray;
+    width: 100%;
+    padding: 15px;
+}
+
+.create-event-section p,
+.create-event-section select,
+.create-event-section textarea {
+    margin: 5px 30px;
+}
+
+.create-event-button {
+    margin: 0px;
+    background-color: red;
+    color: white;
+    box-shadow: 5px 5px 1px black;
+}
+
+.errors {
+    color: red;
+}
