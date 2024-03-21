@@ -64,8 +64,8 @@ export default function CreateNewEvent() {
 
     return (
         <form className='create-event-container' onSubmit={handleSubmit}>
-                <h2>Create an event for {group.name}</h2>
                 <div className='section-one'>
+                    <h2>Create an event for {group.name}</h2>
                     <p>What is the name of your event?</p>
                     <input
                         placeholder='Event name'

@@ -1,5 +1,5 @@
 .create-event-container {
-    width: 600px;
+    width: 80%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -9,9 +9,15 @@
 
 .section-one {
     width: 600px;
+    padding: 15px;
+    margin: auto;
 }
 
-.section-one h2,
+
+.section-one h2 {
+    margin: 25px 30px;
+}
+
 .section-one p,
 .section-one input {
     margin: 5px 30px;
@@ -21,8 +27,9 @@
 
 .create-event-section {
     border-top: 1px solid lightslategray;
-    width: 100%;
+    width: 600px;
     padding: 15px;
+    margin: auto;
 }
 
 .create-event-section p,
@@ -31,8 +38,13 @@
     margin: 5px 30px;
 }
 
+.create-event-button-container {
+    width: 600px;
+    margin: auto;
+}
+
 .create-event-button {
-    margin: 0px;
+    margin: 30px;
     background-color: red;
     color: white;
     box-shadow: 5px 5px 1px black;
