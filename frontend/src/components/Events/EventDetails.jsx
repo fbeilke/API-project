@@ -6,18 +6,21 @@ import { fetchSingleGroup } from '../../store/groups';
 import { FaClock } from "react-icons/fa";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { FaMapLocationDot } from "react-icons/fa6";
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import DeleteEventModal from "./DeleteEventModal"
 import './EventDetails.css'
 
 export default function EventDetails () {
     const dispatch = useDispatch();
     const { eventId } = useParams();
-    // const { user } = useSelector(state => state.session)
-    const { event } = useSelector(state => state.events)
-    const { group } = useSelector(state => state.groups)
+    const { event } = useSelector(state => state.events);
+    const { group } = useSelector(state => state.groups);
+    const { user } = useSelector(state => state.session);
 
 
 
-    console.log('THIS IS MY SINGLE EVENT', event)
+
+
 
 
 
@@ -34,9 +37,13 @@ export default function EventDetails () {
             fetchGroup();
         }
         fetchBoth();
+
     }, [dispatch, eventId])
 
+
+
     if (!event || !group) return null;
+
 
 
     return (
@@ -86,6 +93,16 @@ export default function EventDetails () {
                             <div className='details-split'>
                                 <FaMapLocationDot className='icon'/>
                                 <span className='details-split-label'>{event.type}</span>
+                                {user && user.id === group.Organizer.id ?
+                                <div className='delete-button-container'>
+                                    <button className='delete-event-button'>
+                                        <OpenModalMenuItem
+                                            itemText='Delete'
+                                            modalComponent={<DeleteEventModal />}
+                                        />
+                                    </button>
+                                </div>
+                               : null}
                             </div>
                         </div>
                     </div>
