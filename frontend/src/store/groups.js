@@ -148,7 +148,7 @@ export default function groupsReducer (state = initialState, action) {
             const newState = {...state}
             delete newState[action.groupId]
             newState.group = null;
-            console.log(newState)
+            newState.Groups = null;
             return newState
         }
         case UPDATE_GROUP: {

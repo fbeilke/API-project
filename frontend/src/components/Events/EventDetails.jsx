@@ -88,7 +88,7 @@ export default function EventDetails () {
                             </div>
                             <div className='details-split'>
                                 <HiCurrencyDollar className='icon'/>
-                                <span className='details-split-label'>{!event.price || event.price === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</span>
+                                <span className='details-split-label'>{!event.price || parseFloat(event.price) === 0 ? 'Free' : `$${parseFloat(event.price).toFixed(2)}`}</span>
                             </div>
                             <div className='details-split'>
                                 <FaMapLocationDot className='icon'/>
