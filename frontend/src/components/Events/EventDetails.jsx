@@ -88,15 +88,22 @@ export default function EventDetails () {
                             </div>
                             <div className='details-split'>
                                 <HiCurrencyDollar className='icon'/>
-                                <span className='details-split-label'>{!event.price ? 'Free' : event.price}</span>
+                                <span className='details-split-label'>{!event.price ? 'Free' : `$${event.price.toFixed(2)}`}</span>
                             </div>
                             <div className='details-split'>
                                 <FaMapLocationDot className='icon'/>
                                 <span className='details-split-label'>{event.type}</span>
                                 {user && user.id === group.Organizer.id ?
-                                <div className='delete-button-container'>
+                                <div className='event-button-container'>
+                                    <button
+                                        onClick={() => alert('Feature coming soon!')}
+                                        className='update-event-button'
+                                    >
+                                        Update
+                                    </button>
                                     <button className='delete-event-button'>
                                         <OpenModalMenuItem
+                                            className='delete-event-modal'
                                             itemText='Delete'
                                             modalComponent={<DeleteEventModal />}
                                         />

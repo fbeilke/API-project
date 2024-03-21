@@ -1,0 +1,34 @@
+.update-group-intro {
+    border-bottom: 1px solid lightslategray;
+    width: 100%;
+    padding: 15px;
+}
+
+.update-group-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.update-group-form input {
+    margin-left: 0px;
+}
+
+.update-group-section {
+    border-bottom: 1px solid lightslategray;
+    width: 100%;
+    text-align: left;
+    padding: 15px;
+    margin: 15px 0px;
+}
+
+.update-group-button {
+    background-color: red;
+    color: white;
+    box-shadow: 5px 5px 1px black;
+}
+
+.errors {
+    text-align: left;
+    color: red;
+}

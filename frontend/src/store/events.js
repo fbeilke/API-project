@@ -39,7 +39,7 @@ function createNewEvent(event) {
     }
 }
 
-export function deleteEvent(eventId) {
+function deleteEvent(eventId) {
     return {
         type: DELETE_EVENT,
         eventId

@@ -6,7 +6,9 @@ const SINGLE_GROUP = 'groupsReducer/singleGroup';
 
 const CREATE_NEW_GROUP = 'groupsReducer/createNewGroup';
 
-const DELETE_GROUP = 'groupsReducer/deleteGroup'
+const DELETE_GROUP = 'groupsReducer/deleteGroup';
+
+const UPDATE_GROUP = 'groupsReducer/updateGroup';
 
 function listGroups(groups) {
    return {
@@ -33,6 +35,13 @@ function deleteGroup(groupId) {
     return {
         type: DELETE_GROUP,
         groupId
+    }
+}
+
+function updateGroup(group) {
+    return {
+        type: UPDATE_GROUP,
+        group
     }
 }
 
@@ -97,6 +106,30 @@ export const removeGroup = (groupId) => async (dispatch) => {
     }
 }
 
+export const submitUpdateGroup = (groupId, payload) => async (dispatch) => {
+    const body = {
+        name: payload.name,
+        about: payload.about,
+        type: payload.type,
+        private: payload.private,
+        city: payload.city,
+        state: payload.state
+    }
+
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: 'PUT',
+        body: JSON.stringify(body)
+    })
+
+    if (response.ok) {
+        const data = await response.json();
+        data.GroupImages = payload.image
+        dispatch(updateGroup(data))
+    }
+}
+
+
+
 const initialState = {groups: null}
 
 
@@ -117,6 +150,9 @@ export default function groupsReducer (state = initialState, action) {
             newState.group = null;
             console.log(newState)
             return newState
+        }
+        case UPDATE_GROUP: {
+            return {...state, [action.group.id]: action.group}
         }
         default:
             return state;

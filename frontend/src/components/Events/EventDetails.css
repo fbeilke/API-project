@@ -73,3 +73,29 @@
 .details-split-label {
     color: lightslategray;
 }
+
+.event-button-container {
+    display: flex;
+    gap: 5px;
+}
+
+.update-event-button {
+    height: 20px;
+    width: 100px;
+    background-color: lightslategray;
+    color: white;
+}
+
+.delete-event-button {
+    height: 20px;
+    width: 100px;
+    background-color: lightslategray;
+    color: white;
+    list-style: none;
+    padding: 0px;
+}
+
+.delete-event-modal {
+    height: 20px;
+    width: 100px;
+}

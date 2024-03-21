@@ -1,25 +1,33 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postNewGroup } from '../../store/groups';
-import './CreateNewGroup.css';
+import { submitUpdateGroup } from '../../store/groups';
+import './UpdateGroupForm.css'
 
-
-export default function CreateNewGroup() {
-    const navigate = useNavigate();
+export default function UpdateGroupForm() {
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.session)
+    const navigate = useNavigate();
+    const { groupId } = useParams();
+    const {user} = useSelector(state => state.session);
+    const {group} = useSelector(state => state.groups);
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
     const [type, setType] = useState('');
     const [isPrivate, setIsPrivate] = useState('');
-    const [url, setUrl] = useState('');
     const [validators, setValidators] = useState({});
 
 
-    if (!user) navigate('/');
+    useEffect(() => {
+        setCity(group.city);
+        setState(group.state);
+        setName(group.name);
+        setAbout(group.about);
+        setType(group.type);
+        setIsPrivate(group.private);
+
+    }, [group])
 
 
     async function handleSubmit(e) {
@@ -32,7 +40,6 @@ export default function CreateNewGroup() {
         if (about.length < 50) errors.about = 'Description must be at least 50 characters long';
         if (type === '') errors.type = 'Group Type is required';
         if (isPrivate === '') errors.isPrivate = 'Visibility Type is required'
-        if (!url.length || (!url.endsWith('.png') && !url.endsWith('.jpg') && !url.endsWith('.jpeg'))) errors.url = 'Image URL must end in .png, .jpg, or .jpeg'
 
         setValidators(errors)
 
@@ -45,24 +52,29 @@ export default function CreateNewGroup() {
                 private: isPrivate,
                 city,
                 state,
-                url
+                image: group.GroupImages
             }
 
-           const group = await dispatch(postNewGroup(payload))
+            await dispatch(submitUpdateGroup(groupId, payload))
 
-            await navigate(`/groups/${group.id}`);
+            navigate(`/groups/${groupId}`);
         }
     }
 
+
+    if (!user || !group) navigate('/')
+
+
+
     return (
         <>
-            <h2>Start a new group</h2>
-            <p className='create-group-intro'>We&apos;ll walk you through a few steps to build your local community.</p>
-            <form className='create-group-form' onSubmit={handleSubmit}>
-                <div className='create-group-section'>
+            <h2>Update your group</h2>
+            <p className='update-group-intro'>We&apos;ll walk you through a few steps to build your local community.</p>
+            <form className='update-group-form' onSubmit={handleSubmit}>
+                <div className='update-group-section'>
                     <h3>Set your group&apos;s location.</h3>
                     <p>Meetup groups meet locally, in person, and online. We&apos;ll connect you with people in your area.</p>
-                    <div className='create-group-location'>
+                    <div className='update-group-location'>
                         <input
                             placeholder='City'
                             type='text'
@@ -79,7 +91,7 @@ export default function CreateNewGroup() {
                     </div>
                     {validators.location && <p className='errors'>{validators.location}</p>}
                 </div>
-                <div className='create-group-section'>
+                <div className='update-group-section'>
                     <h3>What will your group&apos;s name be?</h3>
                     <p>Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.</p>
                     <input
@@ -90,7 +102,7 @@ export default function CreateNewGroup() {
                     />
                     {validators.name && <p className='errors'>{validators.name}</p>}
                 </div>
-                <div className='create-group-section'>
+                <div className='update-group-section'>
                     <h3>Describe the purpose of your group.</h3>
                     <p>People will see this when we promote your group, but you&apos;ll be able to add to it later, too.</p>
                     <ol>
@@ -105,7 +117,7 @@ export default function CreateNewGroup() {
                     />
                     {validators.about && <p className='errors'>{validators.about}</p>}
                 </div>
-                <div className='create-group-section'>
+                <div className='update-group-section'>
                     <h3>Final steps...</h3>
                     <p>Is this an in-person or online group?</p>
                     <select name='in-person-or-nah' onChange={e => setType(e.target.value)} value={type} >
@@ -121,20 +133,12 @@ export default function CreateNewGroup() {
                         <option value='false'>Public</option>
                     </select>
                     {validators.isPrivate && <p className='errors'>{validators.isPrivate}</p>}
-                    <p>Please add an image URL for your group below:</p>
-                    <input
-                        placeholder='Image Url'
-                        value={url}
-                        onChange={e => setUrl(e.target.value)}
-                    />
-                    {validators.url && <p className='errors'>{validators.url}</p>}
                 </div>
                 {Object.values(validators).length !== 0 && <p className='errors'>There was an error, unable to submit.</p>}
                 <div className='button-container'>
-                    <button className='create-group-button' type='submit'>Create group</button>
+                    <button className='update-group-button' type='submit'>Update group</button>
                 </div>
             </form>
         </>
     )
-
 }
