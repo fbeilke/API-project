@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import LoginFormPage from './components/LoginFormPage';
-// import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation/Navigation-bonus';
 import LandingPage from './components/LandingPage/LandingPage'
 import Groups from './components/Groups/Groups';
@@ -15,6 +13,7 @@ import UpdateGroupForm from './components/Groups/UpdateGroupForm';
 import UpdateEventForm from './components/Events/UpdateEventForm';
 import ViewMemberships from './components/Memberships/ViewMemberships';
 import UserDetails from './components/Memberships/UserDetails';
+import ManageGroupMemberships from './components/Memberships/ManageGroupMemberships';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 
@@ -89,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: '/user/my-memberships',
         element: <ViewMemberships />
+      },
+      {
+        path: '/groups/:groupId/memberships',
+        element: <ManageGroupMemberships />
       }
     ]
   }

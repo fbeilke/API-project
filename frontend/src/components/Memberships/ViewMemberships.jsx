@@ -58,7 +58,9 @@ export default function ViewMemberships() {
                         <Link to={`/groups/${group.id}/events/new`}>
                             <button className='manage-organizer-buttons'>Create Event</button>
                         </Link>
-                        <button className='manage-organizer-buttons' onClick={() => alert('Feature coming soon!')}>Manage group memberships</button>
+                        <Link to={`/groups/${group.id}/memberships`}>
+                            <button className='manage-organizer-buttons'>Manage group memberships</button>
+                        </Link>
                         <Link to={`/groups/${group.id}/update`}>
                             <button className='manage-organizer-buttons'>Update</button>
                         </Link>

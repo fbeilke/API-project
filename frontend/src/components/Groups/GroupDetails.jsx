@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleGroup } from '../../store/groups';
@@ -62,7 +62,9 @@ export default function GroupDetails () {
                         <Link to={`/groups/${group.id}/events/new`}>
                             <button className='organizer-buttons'>Create Event</button>
                         </Link>
-                        <button className='organizer-buttons' onClick={() => alert('Feature coming soon!')}>Manage group memberships</button>
+                        <Link to={`/groups/${group.id}/memberships`}>
+                            <button className='organizer-buttons'>Manage group memberships</button>
+                        </Link>
                         <Link to={`/groups/${group.id}/update`}>
                             <button className='organizer-buttons'>Update</button>
                         </Link>
