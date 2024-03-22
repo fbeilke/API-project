@@ -25,6 +25,19 @@ function LoginFormModal() {
       });
   };
 
+  const loginDemoUser = async (e) => {
+    e.preventDefault();
+
+    const loginInfo = {
+      credential: "mikeschmidt87",
+      password: "mikepassword"
+    }
+
+    await dispatch(sessionActions.login(loginInfo));
+
+    closeModal();
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -36,7 +49,6 @@ function LoginFormModal() {
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
-            required
           />
           <input
             placeholder='password'
@@ -44,17 +56,13 @@ function LoginFormModal() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
         <button className='submit-button' type="submit" disabled={credential.length < 4 || password.length < 6 ? true : false}>Log In</button>
+      </form>
+      <form onSubmit={loginDemoUser}>
         <button
-          type="submit"
           className='demo-user'
-          onClick={() => {
-            setCredential('mikeschmidt87')
-            setPassword('mikepassword')
-            handleSubmit
-          }}
+          type='submit'
         >
           Login as a demo user
         </button>
