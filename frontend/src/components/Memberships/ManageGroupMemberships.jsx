@@ -16,7 +16,7 @@ export default function ManageGroupMemberships() {
 
     useEffect(() => {
         dispatch(fetchMembershipsOfGroup(groupId))
-    }, [dispatch])
+    }, [dispatch, groupId])
 
     if (!user || !Members) {
         navigate('/')
@@ -27,7 +27,7 @@ export default function ManageGroupMemberships() {
         <div>
             <h2>List of all Members</h2>
             {Members.map((member) => (
-                <div className='each-member'>
+                <div className='each-member' key={member.id}>
                     <h3>{member.Membership[0].status}</h3>
                     <p>{member.firstName} {member.lastName}</p>
 
