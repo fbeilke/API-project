@@ -1,0 +1,55 @@
+.update-event-container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.section-one {
+    width: 600px;
+    padding: 15px;
+    margin: auto;
+}
+
+
+.section-one h2 {
+    margin: 25px 30px;
+}
+
+.section-one p,
+.section-one input {
+    margin: 5px 30px;
+}
+
+
+
+.update-event-section {
+    border-top: 1px solid lightslategray;
+    width: 600px;
+    padding: 15px;
+    margin: auto;
+}
+
+.update-event-section p,
+.update-event-section select,
+.update-event-section textarea {
+    margin: 5px 30px;
+}
+
+.update-event-button-container {
+    width: 600px;
+    margin: auto;
+}
+
+.update-event-submit-button {
+    margin: 30px;
+    background-color: red;
+    color: white;
+    box-shadow: 5px 5px 1px black;
+}
+
+.errors {
+    color: red;
+}

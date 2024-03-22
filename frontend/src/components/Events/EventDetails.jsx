@@ -95,12 +95,13 @@ export default function EventDetails () {
                                 <span className='details-split-label'>{event.type}</span>
                                 {user && user.id === group.Organizer.id ?
                                 <div className='event-button-container'>
-                                    <button
-                                        onClick={() => alert('Feature coming soon!')}
-                                        className='update-event-button'
-                                    >
-                                        Update
-                                    </button>
+                                    <Link to={`/events/${eventId}/update`}>
+                                        <button
+                                            className='update-event-button'
+                                        >
+                                            Update
+                                        </button>
+                                    </Link>
                                     <button className='delete-event-button'>
                                         <OpenModalMenuItem
                                             className='delete-event-modal'

@@ -12,6 +12,7 @@ import EventDetails from './components/Events/EventDetails';
 import CreateNewGroup from './components/Groups/CreateNewGroup';
 import CreateNewEvent from './components/Events/CreateNewEvent';
 import UpdateGroupForm from './components/Groups/UpdateGroupForm';
+import UpdateEventForm from './components/Events/UpdateEventForm';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: '/groups/:groupId/update',
         element: <UpdateGroupForm />
+      },
+      {
+        path: '/events/:eventId/update',
+        element: <UpdateEventForm />
       }
     ]
   }

@@ -485,17 +485,19 @@ router.put('/:eventId', requireAuth, isOwnerOrCohostMember, validateEvent, async
     const { eventId } = req.params;
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
 
-    const validVenue = await Venue.findOne({
-        where: {
-            id: venueId
-        }
-    });
+    if (venueId) {
+        const validVenue = await Venue.findOne({
+            where: {
+                id: venueId
+            }
+        });
 
-    if (!validVenue && venueId !== null) {
-        const err = new Error("Venue couldn't be found");
-        err.title = "Couldn't find a Venue with the specified id";
-        err.status = 404;
-        next(err);
+        if (!validVenue && venueId !== null) {
+            const err = new Error("Venue couldn't be found");
+            err.title = "Couldn't find a Venue with the specified id";
+            err.status = 404;
+            next(err);
+        }
     }
 
     const currentEvent = await Event.findByPk(eventId);

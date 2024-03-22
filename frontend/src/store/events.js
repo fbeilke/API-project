@@ -11,6 +11,8 @@ const CREATE_NEW_EVENT = 'eventsReducer/createNewEvent';
 
 const DELETE_EVENT = 'eventsReducer/deleteEvent';
 
+const UPDATE_EVENT = 'eventsReducer/updateEvent';
+
 // action creators to be used by the reducer
 function listEvents(events) {
    return {
@@ -44,6 +46,13 @@ function deleteEvent(eventId) {
     return {
         type: DELETE_EVENT,
         eventId
+    }
+}
+
+function updateEvent(event) {
+    return {
+        type: UPDATE_EVENT,
+        event
     }
 }
 
@@ -129,6 +138,36 @@ export const removeEvent = (eventId) => async (dispatch) => {
     }
 }
 
+export const submitUpdateEvent = (eventId, payload) => async (dispatch) => {
+    try {
+        const body = {
+            name: payload.name,
+            type: payload.type,
+            price: payload.price,
+            description: payload.description,
+            startDate: payload.startDate.slice(0, 10) + ' ' + payload.startDate.slice(11),
+            endDate: payload.endDate.slice(0, 10) + ' ' + payload.endDate.slice(11),
+        }
+
+        if (!payload.capacity) body.capacity = 10;
+
+        console.log('-------------', body.startDate, body.endDate)
+
+        const response = await csrfFetch(`/api/events/${eventId}`, {
+            method: 'PUT',
+            body: JSON.stringify(body)
+        })
+
+        if (response.ok) {
+            const data = await response.json();
+            data.EventImages = payload.image;
+            dispatch(updateEvent(data));
+            return data;
+        }
+    } catch (err) {
+        return err
+    }
+}
 
 
 const initialState = {events: null}
@@ -157,6 +196,9 @@ export default function eventsReducer (state = initialState, action) {
             newState.byGroup.Events.splice(indexOfEvent, 1)
             console.log('-------------',newState)
             return newState;
+        }
+        case UPDATE_EVENT: {
+            return {...state, [action.event.id]: action.event}
         }
         default:
             return state;
