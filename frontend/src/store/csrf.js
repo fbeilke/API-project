@@ -26,6 +26,7 @@ export async function csrfFetch(url, options = {}) {
   return res;
 }
 
+// makes it so that we can use csrfFetch instead of regular fetch function so that the CSRF token is included in every fetch from the cookies
 export function restoreCSRF() {
   return csrfFetch("/api/csrf/restore");
 }

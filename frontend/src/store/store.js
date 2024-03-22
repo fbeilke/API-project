@@ -4,12 +4,14 @@ import sessionReducer from './session';
 import groupsReducer from './groups';
 import eventsReducer from './events';
 
+// the rootReducer that the app looks at with all the other reducers for each slice of state combined
 const rootReducer = combineReducers({
   session: sessionReducer,
   groups: groupsReducer,
   events: eventsReducer
 });
 
+// allows us to use thunks and also gives us access to the redux logger in dev
 let enhancer;
 if (import.meta.env.MODE === "production") {
   enhancer = applyMiddleware(thunk);

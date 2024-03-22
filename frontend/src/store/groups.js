@@ -1,5 +1,6 @@
 import { csrfFetch } from './csrf.js';
 
+// const variables to prevent typos and guarantee unique cases for reducer
 const LIST_GROUPS = 'groupsReducer/listGroups';
 
 const SINGLE_GROUP = 'groupsReducer/singleGroup';
@@ -10,6 +11,8 @@ const DELETE_GROUP = 'groupsReducer/deleteGroup';
 
 const UPDATE_GROUP = 'groupsReducer/updateGroup';
 
+
+// action creators to be used by the reducer
 function listGroups(groups) {
    return {
         type: LIST_GROUPS,
@@ -45,6 +48,8 @@ function updateGroup(group) {
     }
 }
 
+
+//thunks make fetch to the api routes in the backend then if the response is good, sends that data to the action creator, another thunk, and/or back to the component that dispatched it
 export const fetchAllGroups = () => async (dispatch) => {
     const response = await csrfFetch('/api/groups');
 
@@ -143,6 +148,7 @@ export const submitUpdateGroup = (groupId, payload) => async (dispatch) => {
 const initialState = {groups: null}
 
 
+// reducer checks which case is being called by the action creators and creates a new reference in memory for the store of that slice of state
 export default function groupsReducer (state = initialState, action) {
     switch (action.type) {
         case LIST_GROUPS: {

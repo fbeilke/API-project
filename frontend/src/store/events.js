@@ -1,5 +1,6 @@
 import { csrfFetch } from './csrf.js';
 
+// const variables to prevent typos and guarantee unique cases for reducer
 const LIST_EVENTS = 'eventsReducer/listEvents';
 
 const LIST_BY_GROUP = 'eventsReducer/listByGroup';
@@ -10,13 +11,13 @@ const CREATE_NEW_EVENT = 'eventsReducer/createNewEvent';
 
 const DELETE_EVENT = 'eventsReducer/deleteEvent';
 
+// action creators to be used by the reducer
 function listEvents(events) {
    return {
         type: LIST_EVENTS,
         events
    }
 }
-
 
 function listByGroup(events) {
     return {
@@ -47,6 +48,7 @@ function deleteEvent(eventId) {
 }
 
 
+//thunks make fetch to the api routes in the backend then if the response is good, sends that data to the action creator, another thunk, and/or back to the component that dispatched it
 export const fetchAllEvents = () => async (dispatch) => {
     const response = await csrfFetch('/api/events');
 
@@ -132,6 +134,7 @@ export const removeEvent = (eventId) => async (dispatch) => {
 const initialState = {events: null}
 
 
+// reducer checks which case is being called by the action creators and creates a new reference in memory for the store of that slice of state
 export default function eventsReducer (state = initialState, action) {
     switch (action.type) {
         case LIST_EVENTS: {

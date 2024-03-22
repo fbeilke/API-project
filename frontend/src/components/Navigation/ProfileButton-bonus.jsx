@@ -7,12 +7,14 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
 
+// profile button receives user as prop
 function ProfileButton({ user }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
+  // allows menu to open by clicking button and close by either clicking button again or anywhere outside the dropdown menu
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
@@ -34,6 +36,7 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
+  // logout button
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
@@ -49,6 +52,7 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" /> Profile
       </button>
       <ul className={ulClassName} ref={ulRef}>
+        {/* if user, dropdown menu shows user info and user menu. if no user, dropdown shows login and signup buttons */}
         {user ? (
           <div>
             <div className='dropdown-links'>

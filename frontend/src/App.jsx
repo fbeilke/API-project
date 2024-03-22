@@ -15,16 +15,20 @@ import UpdateGroupForm from './components/Groups/UpdateGroupForm';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 
+// holds our entire app layout
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // loads after 1st render, restores previously logged in session user in case of navigation away from page or hard refresh
+  // also sets isLoaded, confirming the restoreUser thunk has been run
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true)
     });
   }, [dispatch]);
 
+  // returns modal component used for login and signup, as well as nav bar and outlet for the children, rest of app components
   return (
     <>
       <Modal/>
@@ -34,6 +38,7 @@ function Layout() {
   );
 }
 
+// layout with children, all of app components
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -70,18 +75,11 @@ const router = createBrowserRouter([
         path: '/groups/:groupId/update',
         element: <UpdateGroupForm />
       }
-      // {
-      //   path: 'login',
-      //   element: <LoginFormPage />
-      // },
-      // {
-      //   path: 'signup',
-      //   element: <SignupFormPage />
-      // }
     ]
   }
 ]);
 
+// the actual app component that holds all the others, returns RouterProvider with router from above passed in as prop.
 function App() {
   return <RouterProvider router={router} />;
 }

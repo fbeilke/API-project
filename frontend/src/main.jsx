@@ -6,10 +6,12 @@ import './index.css';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
-import { ModalProvider} from './context/Modal'; // took out Modal for linter, defined but never used
+import { ModalProvider} from './context/Modal';
 
+// allows for redux to connect store to react
 const store = configureStore();
 
+// allows additional testing in dev env and for us to host frontend and backend locally in dev using proxy
 if (import.meta.env.MODE !== "production") {
   restoreCSRF();
 
@@ -18,6 +20,7 @@ if (import.meta.env.MODE !== "production") {
   window.sessionActions = sessionActions;
 }
 
+// react strict mode, modal boiler plate code, react-redux provider, app
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ModalProvider>
