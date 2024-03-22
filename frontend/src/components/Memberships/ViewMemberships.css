@@ -1,0 +1,66 @@
+.sub-title {
+    padding: 0px 30px;
+}
+
+.group-card {
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    border-top: 1px solid lightslategray;
+}
+
+
+
+.group-preview-image {
+    width: 350px;
+}
+
+.group-card-info {
+    color: black;
+}
+
+
+
+.group-card-info span {
+    padding: 10px;
+}
+
+
+.manage-organizer-buttons-container {
+    display: flex;
+    gap: 15px;
+    margin-left: 30px;
+}
+
+.manage-organizer-buttons {
+    height: 50px;
+    width: 150px;
+    background-color: lightslategray;
+    color: white;
+    list-style: none;
+    padding: 0px;
+
+}
+
+.unjoin-button {
+    height: 50px;
+    width: 150px;
+    background-color: lightslategray;
+    color: white;
+    list-style: none;
+    padding: 0px;
+    margin-left: 30px;
+
+}
+
+.delete-group-modal {
+    height: 20px;
+    width: 100px;
+}
+
+.group-controls {
+    display: flex;
+    flex-direction: column;
+}

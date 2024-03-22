@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import groupsReducer from './groups';
 import eventsReducer from './events';
+import membershipsReducer from './memberships';
 
 // the rootReducer that the app looks at with all the other reducers for each slice of state combined
 const rootReducer = combineReducers({
   session: sessionReducer,
   groups: groupsReducer,
-  events: eventsReducer
+  events: eventsReducer,
+  memberships: membershipsReducer
 });
 
 // allows us to use thunks and also gives us access to the redux logger in dev

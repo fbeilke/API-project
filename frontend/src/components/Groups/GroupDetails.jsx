@@ -1,8 +1,9 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleGroup } from '../../store/groups';
 import { fetchEventsByGroup } from '../../store/events';
+import { joinExistingGroup, fetchMembershipsOfGroup } from '../../store/memberships';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import DeleteGroupModal from './DeleteGroupModal'
 import './GroupDetails.css';
@@ -13,14 +14,28 @@ export default function GroupDetails () {
     const { user } = useSelector(state => state.session)
     const { group } = useSelector(state => state.groups)
     const { byGroup } = useSelector(state => state.events)
+    const { Members, membership } = useSelector(state => state.memberships)
     const today = new Date();
 
+    let currentMember;
+    if (Members) {
+        currentMember = Members.find(member => user.id === member.id)
+    }
 
+    async function joinGroup() {
+        const response = await dispatch(joinExistingGroup(group.id))
+
+        if (response && !response.memberId) {
+            console.log(response)
+            alert('Membership has already been requested')
+        }
+    }
 
 
     useEffect(() => {
         dispatch(fetchSingleGroup(groupId))
         dispatch(fetchEventsByGroup(groupId))
+        dispatch(fetchMembershipsOfGroup(groupId))
     }, [dispatch, groupId])
 
 
@@ -40,12 +55,14 @@ export default function GroupDetails () {
                     <span>·</span>
                     <span>{group.private === true ? 'Private' : 'Public'}</span>
                     <p>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</p>
-                    {user && user.id !== group.organizerId ? <button className='join-button' onClick={() => alert("Feature coming soon!")}>Join this group</button> : null}
+                    {!currentMember ? <button className='join-button' onClick={joinGroup}>Join this group</button> : null}
+                    {membership && membership.memberId === user.id && membership.status === 'Pending' ? `(Pending approval)` : null}
                     { user && user.id === group.organizerId ?
                     <div className='organizer-buttons-container'>
                         <Link to={`/groups/${group.id}/events/new`}>
                             <button className='organizer-buttons'>Create Event</button>
                         </Link>
+                        <button className='organizer-buttons' onClick={() => alert('Feature coming soon!')}>Manage group memberships</button>
                         <Link to={`/groups/${group.id}/update`}>
                             <button className='organizer-buttons'>Update</button>
                         </Link>
@@ -57,6 +74,7 @@ export default function GroupDetails () {
                             />
                         </button>
                     </div>
+
                     : null}
                 </div>
             </div>

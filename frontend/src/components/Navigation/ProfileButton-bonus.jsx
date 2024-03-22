@@ -62,10 +62,11 @@ function ProfileButton({ user }) {
             <div className='dropdown-info'>
               <li>Hello {user.firstName},</li>
               <li className='dropdown-email'>{user.email}</li>
-              <li>
-                <button className='logout-button' onClick={logout}>Log Out</button>
-              </li>
             </div>
+              <div className='user-link-container'>
+                <Link to='/user/my-memberships' className='user-link'>Manage my memberships</Link>
+              </div>
+              <button className='logout-button' onClick={logout}>Log Out</button>
           </div>
         ) : (
           <>
