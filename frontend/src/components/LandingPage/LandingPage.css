@@ -17,7 +17,7 @@
 }
 
 .intro-img {
-    width: 48%;
+    max-width: 48%;
     border-radius: 25px;
 }
 

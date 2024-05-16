@@ -72,12 +72,15 @@ export default function CreateNewGroup() {
                             type='text'
                             value={city}
                             onChange={e => setCity(e.target.value)}
+                            className='create-group-input city-input'
                         />
+                        <span>, </span>
                         <input
                             placeholder='STATE'
                             type='text'
                             value={state}
                             onChange={e => setState(e.target.value)}
+                            className='create-group-input state-input'
 
                         />
                     </div>
@@ -91,6 +94,7 @@ export default function CreateNewGroup() {
                         type='text'
                         value={name}
                         onChange={e => setName(e.target.value)}
+                        className='create-group-input'
                     />
                     {validators.name && <p className='errors'>{validators.name}</p>}
                 </div>
@@ -106,20 +110,21 @@ export default function CreateNewGroup() {
                         placeholder='Please write at least 50 characters'
                         value={about}
                         onChange={e => setAbout(e.target.value)}
+                        className='create-group-input description-input'
                     />
                     {validators.about && <p className='errors'>{validators.about}</p>}
                 </div>
                 <div className='create-group-section'>
                     <h3>Final steps...</h3>
                     <p>Is this an in-person or online group?</p>
-                    <select name='in-person-or-nah' onChange={e => setType(e.target.value)} value={type} >
+                    <select name='in-person-or-nah' onChange={e => setType(e.target.value)} value={type} className='create-group-input'>
                         <option value='' disabled={true}>(select one)</option>
                         <option value='In person'>In Person</option>
                         <option value='Online'>Online</option>
                     </select>
                     {validators.type && <p className='errors'>{validators.type}</p>}
                     <p>Is this group private or public?</p>
-                    <select name='private-group' onChange={e => setIsPrivate(e.target.value)} value={isPrivate}>
+                    <select name='private-group' onChange={e => setIsPrivate(e.target.value)} value={isPrivate} className='create-group-input'>
                         <option value='' disabled={true}>(select one)</option>
                         <option value='true'>Private</option>
                         <option value='false'>Public</option>
@@ -130,6 +135,7 @@ export default function CreateNewGroup() {
                         placeholder='Image Url'
                         value={url}
                         onChange={e => setUrl(e.target.value)}
+                        className='create-group-input'
                     />
                     {validators.url && <p className='errors'>{validators.url}</p>}
                 </div>

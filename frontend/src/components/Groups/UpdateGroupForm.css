@@ -32,3 +32,20 @@
     text-align: left;
     color: red;
 }
+
+.update-group-input {
+    width: 500px;
+}
+
+.update-group-input.city-input{
+    width: 425px;
+    margin-right: 0px;
+}
+
+.update-group-input.state-input {
+    width: 50px;
+}
+
+.description-input {
+    height: 300px;
+}
